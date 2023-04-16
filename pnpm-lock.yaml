@@ -7,9 +7,24 @@ importers:
       '@nrwl/nx-cloud':
         specifier: latest
         version: 15.3.5
+      '@tsconfig/recommended':
+        specifier: ^1.0.2
+        version: 1.0.2
       nx:
         specifier: 15.9.2
         version: 15.9.2
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
+
+  packages/core:
+    devDependencies:
+      '@tsconfig/recommended':
+        specifier: ^1.0.2
+        version: 1.0.2
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
 
 packages:
 
@@ -159,6 +174,10 @@ packages:
     dependencies:
       node-addon-api: 3.2.1
       node-gyp-build: 4.6.0
+    dev: true
+
+  /@tsconfig/recommended@1.0.2:
+    resolution: {integrity: sha512-dbHBtbWBOjq0/otpopAE02NT2Cm05Qe2JsEKeCf/wjSYbI2hz8nCqnpnOJWHATgjDz4fd3dchs3Wy1gQGjfN6w==}
     dev: true
 
   /@yarnpkg/lockfile@1.1.0:
@@ -959,6 +978,12 @@ packages:
 
   /tslib@2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
+    dev: true
+
+  /typescript@5.0.4:
+    resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
+    engines: {node: '>=12.20'}
+    hasBin: true
     dev: true
 
   /universalify@2.0.0:
