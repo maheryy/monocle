@@ -1,5 +1,5 @@
 {
-  "name": "@monocle/core",
+  "name": "@monocle/browser",
   "version": "0.1.0",
   "author": "Shifter Shop",
   "license": "MIT",
@@ -15,6 +15,9 @@
   },
   "scripts": {
     "build": "tsup"
+  },
+  "dependencies": {
+    "@monocle/core": "workspace:^"
   },
   "devDependencies": {
     "tsup": "^6.7.0"

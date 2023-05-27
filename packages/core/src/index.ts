@@ -1,1 +1,1 @@
-export { BaseClient } from "./client"
+export { BaseClient } from "./client";
