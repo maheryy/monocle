@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -29,6 +33,22 @@ importers:
 
   packages/core:
     devDependencies:
+      tsup:
+        specifier: ^6.7.0
+        version: 6.7.0(typescript@5.0.4)
+
+  packages/node:
+    dependencies:
+      '@monocle/core':
+        specifier: workspace:^
+        version: link:../core
+      wretch:
+        specifier: ^2.5.2
+        version: 2.5.2
+    devDependencies:
+      '@types/node':
+        specifier: ^20.3.1
+        version: 20.3.1
       tsup:
         specifier: ^6.7.0
         version: 6.7.0(typescript@5.0.4)
@@ -417,6 +437,10 @@ packages:
 
   /@tsconfig/recommended@1.0.2:
     resolution: {integrity: sha512-dbHBtbWBOjq0/otpopAE02NT2Cm05Qe2JsEKeCf/wjSYbI2hz8nCqnpnOJWHATgjDz4fd3dchs3Wy1gQGjfN6w==}
+    dev: true
+
+  /@types/node@20.3.1:
+    resolution: {integrity: sha512-EhcH/wvidPy1WeML3TtYFGR83UzjxeWRen9V402T8aUGYsCHOmfoisV3ZSg03gAFIbLq8TnWOJ0f4cALtnSEUg==}
     dev: true
 
   /@yarnpkg/lockfile@1.1.0:
@@ -1675,6 +1699,11 @@ packages:
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
+
+  /wretch@2.5.2:
+    resolution: {integrity: sha512-6Pd1GvoNYzf17WH1jggzsq8E00UQqiO0kJvLS1dmIEnX8IE0zBfd77Sid5IqTGYVKhad88ygTudbvHdsvPvmCA==}
+    engines: {node: '>=14'}
+    dev: false
 
   /y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}

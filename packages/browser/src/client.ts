@@ -1,11 +1,21 @@
-import { BaseClient } from "@monocle/core";
+import { BaseClient, Payload } from "@monocle/core";
+import { BrowserClientOptions } from "./types";
 
 export class BrowserClient extends BaseClient {
-  track(eventName: string, payload: unknown): void {
-    throw new Error("Method not implemented.");
+  constructor({ app, url }: BrowserClientOptions) {
+    super({ app, url });
   }
 
-  identify(userId: string, payload: unknown): void {
-    throw new Error("Method not implemented.");
+  track(eventName: string, payload?: Payload): void {
+    const url = new URL("/track ", this.url);
+
+    const data = JSON.stringify({
+      ...payload,
+      app: this.app,
+      event: eventName,
+      id: this.id,
+    });
+
+    navigator.sendBeacon(url, data);
   }
 }
