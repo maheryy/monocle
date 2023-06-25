@@ -20,6 +20,14 @@ export class BrowserClient extends BaseClient {
     this.send("/event", { ...payload, event: eventName });
   }
 
+  metric(name: string, value: number): void {
+    this.send("/metric", { value, name });
+  }
+
+  dimension(name: string, value: string): void {
+    this.send("/dimension", { value, name });
+  }
+
   page(): void {
     this.send("/page", { url: window.location.href });
   }

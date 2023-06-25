@@ -27,6 +27,16 @@ export abstract class BaseClient implements Client {
   abstract event(eventName: string, payload: unknown): void;
 
   /**
+   * Sends a metric
+   */
+  abstract metric(name: string, value: number): void;
+
+  /**
+   * Sends a dimension
+   */
+  abstract dimension(name: string, value: string): void;
+
+  /**
    * Identifies a user with an unique ID
    */
   identify(id?: string, payload?: Payload): void {
