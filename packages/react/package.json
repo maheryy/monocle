@@ -1,5 +1,5 @@
 {
-  "name": "@monocle/browser",
+  "name": "@monocle/react",
   "version": "0.1.0",
   "author": "Shifter Shop",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "build:watch": "tsup --watch"
   },
   "dependencies": {
-    "@monocle/core": "workspace:^"
+    "@monocle/browser": "workspace:^"
   },
   "devDependencies": {
     "tsup": "^6.7.0"
