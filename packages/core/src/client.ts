@@ -24,7 +24,7 @@ export abstract class BaseClient implements Client {
   /**
    * Sends an event
    */
-  abstract event(eventName: string, payload: unknown): void;
+  abstract event(name: string, payload: Payload): void;
 
   /**
    * Sends a metric

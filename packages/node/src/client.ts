@@ -21,15 +21,15 @@ export class NodeClient extends BaseClient {
     this.w.post(data, url);
   }
 
-  event(eventName: string, payload?: Payload): void {
-    this.send("/event", { ...payload, event: eventName });
+  event(name: string, payload?: Payload): void {
+    this.send("/event", { name, payload });
   }
 
   metric(name: string, value: number): void {
-    this.send("/metric", { value, name });
+    this.send("/metric", { name, value });
   }
 
   dimension(name: string, value: string): void {
-    this.send("/dimension", { value, name });
+    this.send("/dimension", { name, value });
   }
 }
