@@ -22,10 +22,13 @@ export abstract class BaseClient implements Client {
   }
 
   /**
-   * Identify a user with an unique ID
+   * Sends an event
    */
   abstract event(eventName: string, payload: unknown): void;
 
+  /**
+   * Identifies a user with an unique ID
+   */
   identify(id?: string, payload?: Payload): void {
     if (id) {
       this.id = id;
