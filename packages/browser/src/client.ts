@@ -16,8 +16,8 @@ export class BrowserClient extends BaseClient {
     navigator.sendBeacon(url, data);
   }
 
-  track(eventName: string, payload?: Payload): void {
-    this.send("/track", { ...payload, event: eventName });
+  event(eventName: string, payload?: Payload): void {
+    this.send("/event", { ...payload, event: eventName });
   }
 
   page(): void {

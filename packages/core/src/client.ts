@@ -24,14 +24,14 @@ export abstract class BaseClient implements Client {
   /**
    * Identify a user with an unique ID
    */
-  abstract track(eventName: string, payload: unknown): void;
+  abstract event(eventName: string, payload: unknown): void;
 
   identify(id?: string, payload?: Payload): void {
     if (id) {
       this.id = id;
 
       if (payload) {
-        this.track("identify", payload);
+        this.event("identify", payload);
       }
 
       return;
@@ -39,6 +39,6 @@ export abstract class BaseClient implements Client {
 
     this.id = crypto.randomUUID();
 
-    this.track("identify", { id });
+    this.event("identify", { id });
   }
 }

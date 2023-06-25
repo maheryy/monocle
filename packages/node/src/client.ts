@@ -7,7 +7,7 @@ export class NodeClient extends BaseClient {
     super({ app, url });
   }
 
-  track(eventName: string, payload?: Payload): void {
+  event(eventName: string, payload?: Payload): void {
     const w = wretch(this.url);
 
     const data = {
@@ -17,6 +17,6 @@ export class NodeClient extends BaseClient {
       id: this.id,
     };
 
-    w.post(data, "/track");
+    w.post(data, "/event");
   }
 }
