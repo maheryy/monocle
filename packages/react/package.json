@@ -1,0 +1,19 @@
+{
+  "name": "@monocle/react",
+  "version": "0.1.0",
+  "author": "Shifter Shop",
+  "license": "MIT",
+  "type": "module",
+  "browser": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch"
+  },
+  "dependencies": {
+    "@monocle/browser": "workspace:^"
+  },
+  "devDependencies": {
+    "tsup": "^6.7.0"
+  }
+}
