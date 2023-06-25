@@ -29,6 +29,10 @@ export class BrowserClient extends BaseClient {
   }
 
   page(): void {
-    this.send("/page", { url: window.location.href });
+    this.dimension("page", window.location.href);
+  }
+
+  time(action: string, duration: number): void {
+    this.metric(action, duration);
   }
 }
