@@ -22,16 +22,29 @@ export abstract class BaseClient implements Client {
   }
 
   /**
-   * Identify a user with an unique ID
+   * Sends an event
    */
-  abstract track(eventName: string, payload: unknown): void;
+  abstract event(name: string, payload: Payload): void;
 
+  /**
+   * Sends a metric
+   */
+  abstract metric(name: string, value: number): void;
+
+  /**
+   * Sends a dimension
+   */
+  abstract dimension(name: string, value: string): void;
+
+  /**
+   * Identifies a user with an unique ID
+   */
   identify(id?: string, payload?: Payload): void {
     if (id) {
       this.id = id;
 
       if (payload) {
-        this.track("identify", payload);
+        this.event("identify", payload);
       }
 
       return;
@@ -39,6 +52,6 @@ export abstract class BaseClient implements Client {
 
     this.id = crypto.randomUUID();
 
-    this.track("identify", { id });
+    this.event("identify", { id });
   }
 }
