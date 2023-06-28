@@ -1,8 +1,7 @@
 import { z } from "zod";
+import { Common } from "../common/common";
 
-export const Dimension = z.object({
-  id: z.string(),
-  name: z.string(),
+export const Dimension = Common.extend({
   value: z.string(),
 });
 

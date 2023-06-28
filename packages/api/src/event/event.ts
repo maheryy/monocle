@@ -1,9 +1,8 @@
 import { z } from "zod";
 import { JsonObject } from "type-fest";
+import { Common } from "../common/common";
 
-export const Event = z.object({
-  id: z.string(),
-  name: z.string(),
+export const Event = Common.extend({
   payload: z.record(z.unknown()),
 });
 

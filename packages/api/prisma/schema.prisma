@@ -12,6 +12,8 @@ generator client {
 
 model Event {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  app       String
+  userId    String
   name      String
   payload   Json
   createdAt DateTime @default(now())
@@ -19,6 +21,8 @@ model Event {
 
 model Metric {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  app       String
+  userId    String
   name      String
   value     Float
   createdAt DateTime @default(now())
@@ -26,6 +30,8 @@ model Metric {
 
 model Dimension {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  app       String
+  userId    String
   name      String
   value     String
   createdAt DateTime @default(now())
