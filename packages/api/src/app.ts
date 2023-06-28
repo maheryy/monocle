@@ -1,8 +1,8 @@
 import express from "express";
-import metricRouter from "./routes/metrics";
-import eventRouter from "./routes/events";
-import dimensionRouter from "./routes/dimensions";
-import docsRouter from "./routes/docs";
+import metricRouter from "./metric/metric.router";
+import eventRouter from "./event/event.router";
+import dimensionRouter from "./dimension/dimension.router";
+import docsRouter from "./docs/docs.router";
 
 export function createMonocleServer() {
   const app = express();

@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONOCLE_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Event {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  payload   Json
+  createdAt DateTime @default(now())
+}
+
+model Metric {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  value     Float
+  createdAt DateTime @default(now())
+}
+
+model Dimension {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  value     String
+  createdAt DateTime @default(now())
+}

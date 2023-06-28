@@ -107,6 +107,7 @@ dist
 # Docusaurus cache and generated files
 .docusaurus
 
+
 # Serverless directories
 .serverless/
 
@@ -130,4 +131,4 @@ dist
 .pnp.*
 
 # REST Client
-.http
+*.http
