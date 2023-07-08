@@ -5,9 +5,13 @@ import dimensionRouter from "./dimension/dimension.router";
 import docsRouter from "./docs/docs.router";
 import compression from "compression";
 import helmet from "helmet";
+import cors from "cors";
+import { MonocleServerOptions } from "./types";
 
-export function createMonocleServer() {
+export function createMonocleServer({ corsOptions }: MonocleServerOptions) {
   const app = express();
+
+  app.use(cors(corsOptions));
 
   app.use(express.json());
 
