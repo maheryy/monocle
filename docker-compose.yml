@@ -1,0 +1,25 @@
+services:
+  mongodb:
+    image: bitnami/mongodb:6.0.7
+    environment:
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_ADVERTISED_HOSTNAME: 127.0.0.1
+      MONGODB_ROOT_USERNAME: ${MONGODB_ROOT_USERNAME?error}
+      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD?error}
+      MONGODB_REPLICA_SET_KEY: ${MONGODB_REPLICA_SET_KEY?error}
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/bitnami/mongodb
+
+  mongo-express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_ROOT_USERNAME?error}:${MONGODB_ROOT_PASSWORD?error}@mongodb:27017
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb:
