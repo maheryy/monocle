@@ -33,7 +33,7 @@ export class BrowserClient extends BaseClient {
     this.dimension("page", window.location.href);
   }
 
-  time(action: string, duration: number): void {
+  time(action: string, duration = performance.now()): void {
     this.metric(action, duration);
   }
 
