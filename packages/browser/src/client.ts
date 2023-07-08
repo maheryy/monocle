@@ -1,5 +1,6 @@
 import { BaseClient, Payload } from "@monocle/core";
 import { BrowserClientOptions } from "./types";
+import { onCLS, onLCP, onFID, onFCP, onTTFB, onINP } from "web-vitals";
 
 export class BrowserClient extends BaseClient {
   constructor({ app, url }: BrowserClientOptions) {
@@ -34,5 +35,31 @@ export class BrowserClient extends BaseClient {
 
   time(action: string, duration: number): void {
     this.metric(action, duration);
+  }
+
+  vitals(): void {
+    onCLS(({ name, value }) => {
+      this.metric(name, value);
+    });
+
+    onLCP(({ name, value }) => {
+      this.metric(name, value);
+    });
+
+    onFID(({ name, value }) => {
+      this.metric(name, value);
+    });
+
+    onFCP(({ name, value }) => {
+      this.metric(name, value);
+    });
+
+    onTTFB(({ name, value }) => {
+      this.metric(name, value);
+    });
+
+    onINP(({ name, value }) => {
+      this.metric(name, value);
+    });
   }
 }
