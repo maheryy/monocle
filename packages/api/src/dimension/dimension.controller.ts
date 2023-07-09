@@ -4,5 +4,5 @@ import * as dimensionService from "./dimension.service";
 export async function createDimension({ body }: Request, res: Response) {
   const dimension = await dimensionService.createDimension(body);
 
-  return res.json(dimension);
+  return res.status(204).end();
 }
