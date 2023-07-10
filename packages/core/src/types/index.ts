@@ -4,10 +4,12 @@ export interface Payload {
 
 export interface Client {
   app: string;
-  id: string;
+  userId: string;
   url: string;
-  identify(id?: string, payload?: Payload): void;
+  identify(userId?: string, payload?: Payload): void;
   event(eventName: string, payload?: Payload): void;
+  metric(metricName: string, value: number): void;
+  dimension(dimensionName: string, value: string): void;
 }
 
 export interface ClientOptions {

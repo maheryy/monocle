@@ -9,7 +9,7 @@ export abstract class BaseClient implements Client {
   /**
    * The unique ID of the user
    */
-  id: string = crypto.randomUUID();
+  userId: string = crypto.randomUUID();
 
   /**
    * The URL of the api
@@ -39,19 +39,17 @@ export abstract class BaseClient implements Client {
   /**
    * Identifies a user with an unique ID
    */
-  identify(id?: string, payload?: Payload): void {
-    if (id) {
-      this.id = id;
+  identify(userId?: string, payload?: Payload): void {
+    if (userId) {
+      this.userId = userId;
 
       if (payload) {
         this.event("identify", payload);
       }
-
-      return;
     }
 
-    this.id = crypto.randomUUID();
+    this.userId = crypto.randomUUID();
 
-    this.event("identify", { id });
+    this.event("identify", { userId });
   }
 }
