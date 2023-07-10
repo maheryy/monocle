@@ -1,6 +1,6 @@
-export interface Payload {
-  [key: string]: unknown;
-}
+import { JsonObject } from "type-fest";
+
+export interface Payload extends JsonObject {}
 
 export interface Client {
   app: string;
