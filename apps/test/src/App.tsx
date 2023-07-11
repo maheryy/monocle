@@ -7,6 +7,7 @@ function App() {
   });
 
   client.vitals();
+  client.mouse();
 
   return (
     <>
