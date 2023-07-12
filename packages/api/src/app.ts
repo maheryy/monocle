@@ -10,7 +10,7 @@ import { MonocleServerOptions } from "./types";
 
 export function createMonocleServer({
   corsOptions,
-}: MonocleServerOptions): Express {
+}: MonocleServerOptions = {}): Express {
   const app = express();
 
   app.use(cors(corsOptions));
