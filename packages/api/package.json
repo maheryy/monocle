@@ -25,6 +25,7 @@
   },
   "scripts": {
     "build": "tsup && pnpm copy",
+    "build:docker": "tsup docker/index.ts",
     "build:watch": "tsup --watch",
     "copy": "copyfiles \"package.json\" dist",
     "dev": "tsnd src/index.ts"

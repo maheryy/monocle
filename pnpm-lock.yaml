@@ -40,6 +40,12 @@ importers:
         specifier: ^2.7.0
         version: 2.7.0(solid-js@1.7.7)(vite@4.4.0)
 
+  docker/api:
+    dependencies:
+      '@ekezoh/monocle.api':
+        specifier: workspace:^
+        version: link:../../packages/api/dist
+
   packages/api:
     dependencies:
       '@prisma/client':
