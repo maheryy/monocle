@@ -1,8 +1,21 @@
 import { BaseClient, Payload } from "@monocle/core";
 import { BrowserClientOptions } from "./types";
 import { onCLS, onLCP, onFID, onFCP, onTTFB, onINP } from "web-vitals";
+import {
+  Subscription,
+  bufferCount,
+  bufferWhen,
+  filter,
+  fromEvent,
+  map,
+  merge,
+  takeWhile,
+  throttleTime,
+} from "rxjs";
 
 export class BrowserClient extends BaseClient {
+  private mousePositionsSubscription?: Subscription;
+
   constructor({ app, url }: BrowserClientOptions) {
     super({ app, url });
   }
@@ -29,6 +42,10 @@ export class BrowserClient extends BaseClient {
   }
 
   event(name: string, payload?: Payload): void {
+    if (!payload) {
+      return this.send("/events", { name });
+    }
+
     this.send("/events", { name, payload });
   }
 
@@ -72,5 +89,50 @@ export class BrowserClient extends BaseClient {
     onINP(({ name, value }) => {
       this.metric(name, value);
     });
+  }
+
+  mouse(): { subscribe: () => void; unsubscribe: () => void } {
+    const subscribe = () => {
+      const mouseMove$ = fromEvent<MouseEvent>(document, "mousemove");
+      const visibilityChange$ = fromEvent(document, "visibilitychange");
+
+      const mousePositions$ = mouseMove$.pipe(
+        throttleTime(100),
+        map(({ clientX, clientY, pageX, pageY, timeStamp }) => ({
+          clientX,
+          clientY,
+          pageX,
+          pageY,
+          timeStamp,
+        }))
+      );
+
+      const isHidden$ = visibilityChange$.pipe(
+        takeWhile(() => document.visibilityState === "hidden")
+      );
+
+      const buffer$ = mousePositions$.pipe(bufferCount(100));
+      const trigger$ = merge(buffer$, isHidden$);
+
+      this.mousePositionsSubscription = mousePositions$
+        .pipe(bufferWhen(() => trigger$))
+        .subscribe((mousePositions) => {
+          this.event("mouse", {
+            page: window.location.href,
+            mousePositions,
+          });
+        });
+    };
+
+    const unsubscribe = () => {
+      if (this.mousePositionsSubscription) {
+        this.mousePositionsSubscription.unsubscribe();
+      }
+    };
+
+    return {
+      subscribe,
+      unsubscribe,
+    };
   }
 }

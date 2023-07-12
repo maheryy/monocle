@@ -18,6 +18,7 @@
     "build:watch": "tsup --watch"
   },
   "devDependencies": {
-    "tsup": "^6.7.0"
+    "tsup": "^6.7.0",
+    "type-fest": "^3.12.0"
   }
 }

@@ -40,16 +40,18 @@ export abstract class BaseClient implements Client {
    * Identifies a user with an unique ID
    */
   identify(userId?: string, payload?: Payload): void {
-    if (userId) {
-      this.userId = userId;
+    if (!userId) {
+      this.userId = crypto.randomUUID();
 
-      if (payload) {
-        this.event("identify", payload);
-      }
+      return this.event("identify", { userId: this.userId });
     }
 
-    this.userId = crypto.randomUUID();
+    this.userId = userId;
 
-    this.event("identify", { userId });
+    if (!payload) {
+      return this.event("identify", { userId: this.userId });
+    }
+
+    this.event("identify", { userId: this.userId, ...payload });
   }
 }
