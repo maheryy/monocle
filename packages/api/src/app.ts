@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Express } from "express";
 import metricRouter from "./metric/metric.router";
 import eventRouter from "./event/event.router";
 import dimensionRouter from "./dimension/dimension.router";
@@ -8,7 +8,9 @@ import helmet from "helmet";
 import cors from "cors";
 import { MonocleServerOptions } from "./types";
 
-export function createMonocleServer({ corsOptions }: MonocleServerOptions) {
+export function createMonocleServer({
+  corsOptions,
+}: MonocleServerOptions): Express {
   const app = express();
 
   app.use(cors(corsOptions));

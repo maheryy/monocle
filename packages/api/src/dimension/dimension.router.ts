@@ -3,7 +3,7 @@ import { validate } from "../middlewares/validate";
 import { CreateDimension } from "./dimension";
 import { createDimension } from "./dimension.controller";
 
-const dimensionRouter = Router();
+const dimensionRouter: Router = Router();
 
 dimensionRouter.post("/", validate(CreateDimension), createDimension);
 
