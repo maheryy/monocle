@@ -1,5 +1,5 @@
 {
-  "name": "@monocle/api",
+  "name": "@ekezoh/monocle.api",
   "version": "0.1.0",
   "author": "Shifter Shop",
   "license": "MIT",
@@ -14,7 +14,14 @@
   },
   "publishConfig": {
     "access": "public",
-    "directory": "dist"
+    "directory": "dist",
+    "exports": {
+      ".": {
+        "import": "./index.mjs",
+        "require": "./index.js",
+        "types": "./index.d.ts"
+      }
+    }
   },
   "scripts": {
     "build": "tsup && pnpm copy",
