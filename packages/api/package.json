@@ -17,8 +17,9 @@
     "directory": "dist"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && pnpm copy",
     "build:watch": "tsup --watch",
+    "copy": "copyfiles \"package.json\" dist",
     "dev": "tsnd src/index.ts"
   },
   "prisma": {
@@ -32,6 +33,7 @@
     "@types/node": "^20.3.1",
     "@types/swagger-jsdoc": "^6.0.1",
     "@types/swagger-ui-express": "^4.1.3",
+    "copyfiles": "^2.4.1",
     "prisma": "^4.16.1",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
