@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+import authRoutes from "@/routes/auth";
+import adminRoutes from "@/routes/admin";
 
-const routes: RouteObject[] = [{ path: "/", element: <div>Home</div> }];
+const routes: RouteObject[] = [authRoutes, ...adminRoutes];
 
 const router = createBrowserRouter(routes);
 
