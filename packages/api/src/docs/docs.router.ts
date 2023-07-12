@@ -14,7 +14,7 @@ const swaggerSpec = swaggerJsdoc({
   apis: ["./src/routes/*.ts"],
 });
 
-const docsRouter = Router();
+const docsRouter: Router = Router();
 
 docsRouter.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
