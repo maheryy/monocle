@@ -12,6 +12,10 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "directory": "dist"
+  },
   "scripts": {
     "build": "tsup",
     "build:watch": "tsup --watch",
