@@ -2,6 +2,7 @@ import { BaseClient, Payload } from "@monocle/core";
 import { BrowserClientOptions } from "./types";
 import { onCLS, onLCP, onFID, onFCP, onTTFB, onINP } from "web-vitals";
 import {
+  Subscription,
   bufferCount,
   bufferWhen,
   filter,
@@ -13,6 +14,8 @@ import {
 } from "rxjs";
 
 export class BrowserClient extends BaseClient {
+  private mousePositionsSubscription?: Subscription;
+
   constructor({ app, url }: BrowserClientOptions) {
     super({ app, url });
   }
@@ -88,36 +91,48 @@ export class BrowserClient extends BaseClient {
     });
   }
 
-  mouse(): void {
-    const mouseMove$ = fromEvent<MouseEvent>(document, "mousemove");
-    const visibilityChange$ = fromEvent(document, "visibilitychange");
+  mouse(): { subscribe: () => void; unsubscribe: () => void } {
+    const subscribe = () => {
+      const mouseMove$ = fromEvent<MouseEvent>(document, "mousemove");
+      const visibilityChange$ = fromEvent(document, "visibilitychange");
 
-    const mousePositions$ = mouseMove$.pipe(
-      throttleTime(100),
-      map(({ clientX, clientY, pageX, pageY, timeStamp }) => ({
-        clientX,
-        clientY,
-        pageX,
-        pageY,
-        timeStamp,
-      }))
-    );
+      const mousePositions$ = mouseMove$.pipe(
+        throttleTime(100),
+        map(({ clientX, clientY, pageX, pageY, timeStamp }) => ({
+          clientX,
+          clientY,
+          pageX,
+          pageY,
+          timeStamp,
+        }))
+      );
 
-    const isHidden$ = visibilityChange$.pipe(
-      takeWhile(() => document.visibilityState === "hidden")
-    );
+      const isHidden$ = visibilityChange$.pipe(
+        takeWhile(() => document.visibilityState === "hidden")
+      );
 
-    const buffer$ = mousePositions$.pipe(bufferCount(100));
+      const buffer$ = mousePositions$.pipe(bufferCount(100));
+      const trigger$ = merge(buffer$, isHidden$);
 
-    const trigger$ = merge(buffer$, isHidden$);
-
-    mousePositions$
-      .pipe(bufferWhen(() => trigger$))
-      .subscribe((mousePositions) => {
-        this.event("mouse", {
-          page: window.location.href,
-          mousePositions,
+      this.mousePositionsSubscription = mousePositions$
+        .pipe(bufferWhen(() => trigger$))
+        .subscribe((mousePositions) => {
+          this.event("mouse", {
+            page: window.location.href,
+            mousePositions,
+          });
         });
-      });
+    };
+
+    const unsubscribe = () => {
+      if (this.mousePositionsSubscription) {
+        this.mousePositionsSubscription.unsubscribe();
+      }
+    };
+
+    return {
+      subscribe,
+      unsubscribe,
+    };
   }
 }

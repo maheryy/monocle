@@ -1,4 +1,5 @@
 import { BrowserClient } from "@monocle/browser";
+import { createEffect, onCleanup } from "solid-js";
 
 function App() {
   const client = new BrowserClient({
@@ -7,7 +8,15 @@ function App() {
   });
 
   client.vitals();
-  client.mouse();
+  const { subscribe, unsubscribe } = client.mouse();
+
+  createEffect(() => {
+    subscribe();
+
+    onCleanup(() => {
+      unsubscribe();
+    });
+  });
 
   return (
     <>
