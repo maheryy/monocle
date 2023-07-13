@@ -81,6 +81,8 @@ pnpm install
 
 ### Development
 
+#### Database
+
 Copy all `.env.example` files to `.env` files.
 
 ```sh
@@ -100,6 +102,16 @@ To seed the database, run the following commands in the `packages/api` directory
 pnpm exec prisma generate
 pnpm exec prisma db seed
 ```
+
+To view the data, you can use [prisma studio](https://www.prisma.io/studio).
+
+```sh
+pnpm exec prisma studio
+```
+
+Or use mongo-express running on port [8081](http://localhost:8081).
+
+#### Packages
 
 `api` and `ui` has a `dev` script that you can run to start the development server.
 
