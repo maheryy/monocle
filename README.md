@@ -8,15 +8,15 @@ Monocle is split into multiple packages
 
 ### Server packages (The ones you will always need)
 
-`@monocle/api`: handles requests from the different clients and stores data in the database.
+`@monocle/api` handles requests from the different clients and stores data in the database.
 
-`@monocle/ui`: allows you to view analytics data.
+`@monocle/ui` allows you to view analytics data.
 
 ### Client packages (The ones you may need)
 
-`@monocle/browser`: focuses on tracking interactions and collecting data that may occur in a browser.
+`@monocle/browser` focuses on tracking interactions and collecting data that may occur in a browser.
 
-`@monocle/node`: focuses on tracking interactions and collecting data that may occur in a node environment.
+`@monocle/node` focuses on tracking interactions and collecting data that may occur in a node environment.
 
 ## Installation
 
@@ -36,7 +36,7 @@ pnpm add @ekezoh/monocle.api
 
 ### Usage
 
-Use the `createMonocleServer` function to create an express server that will handle requests from the different clients.
+Use the `createMonocleServer` function to create an [express](https://expressjs.com/en/4x/api.html#express) server that you can extend.
 
 ```ts
 import { createMonocleServer } from "@ekezoh/monocle.api";
@@ -52,12 +52,63 @@ server.listen(3000);
 
 Make sure to set the following environment variables:
 
-MONOCLE_DATABASE_URL: The url of the database to use. (no default)
+`MONOCLE_DATABASE_URL` is the url of the database to use. (no default)
 
-MONOCLE_CORS_ORIGIN: The origin to allow cors from. (default: `*`)
+`MONOCLE_CORS_ORIGIN` is the origin to allow cors from. (default: `*`)
 
 #### Example using docker
 
 ```sh
 docker run -p 3000:3000 --env-file .env -d @ekezoh/monocle.api
+```
+
+## Contributing
+
+### Requirements
+
+- [Node.js](https://nodejs.org/en/) >= 18.16.1
+- [pnpm](https://pnpm.io/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+### Setup
+
+At the root of the repository, run the following command to install all dependencies:
+
+```sh
+pnpm install
+```
+
+### Development
+
+Copy all `.env.example` files to `.env` files.
+
+```sh
+# Linux based systems
+find . -type f -name ".env.example" -exec sh -c 'cp "$1" "${1%.example}"' _ {} \;
+```
+
+To start the development database, run the following command:
+
+```sh
+docker compose up -d
+```
+
+To seed the database, run the following commands in the `packages/api` directory:
+
+```sh
+pnpm exec prisma generate
+pnpm exec prisma db seed
+```
+
+`api` and `ui` has a `dev` script that you can run to start the development server.
+
+```sh
+pnpm dev
+```
+
+Other packages can be built using nx
+
+```sh
+pnpm exec nx build <package>
 ```
