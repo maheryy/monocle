@@ -27,8 +27,8 @@
     "build": "tsup && pnpm copy",
     "build:docker": "tsup docker/index.ts",
     "build:watch": "tsup --watch",
-    "copy": "copyfiles \"package.json\" \"README.md\" dist",
-    "dev": "tsnd src/index.ts"
+    "copy": "copyfiles \"README.md\" dist",
+    "dev": "tsnd docker/index.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
