@@ -12,7 +12,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       <Sidebar />
       <div className="app-content">
         <Header />
-        <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="bg-gray-50 dark:bg-gray-900 h-full">
           <main>
             <Outlet />
             {children}
