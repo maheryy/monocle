@@ -1,4 +1,4 @@
-import { BrowserClient, Payload } from "@monocle/browser";
+import { BrowserClient } from "@monocle/browser";
 import { ReactClientOptions } from "./types";
 
 export class ReactClient extends BrowserClient {
