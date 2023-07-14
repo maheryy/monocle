@@ -27,7 +27,7 @@
     "build": "tsup && pnpm copy",
     "build:docker": "tsup docker/index.ts",
     "build:watch": "tsup --watch",
-    "copy": "copyfiles \"package.json\" dist",
+    "copy": "copyfiles \"package.json\" \"README.md\" dist",
     "dev": "tsnd src/index.ts"
   },
   "prisma": {
