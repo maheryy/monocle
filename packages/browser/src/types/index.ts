@@ -1,3 +1,3 @@
 import { ClientOptions } from "@monocle/core";
 
-export interface BrowserClientOptions extends ClientOptions {}
+export interface MonocleClientOptions extends ClientOptions {}
