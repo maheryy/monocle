@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useLayoutContext } from "@/hooks/context";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import HomeIcon from "@icons/home.svg";
+import CogIcon from "@icons/cog.svg";
 
 const Sidebar = () => {
   const { isSidebarOpen, sidebarRef } = useLayoutContext();
@@ -18,6 +19,7 @@ const Sidebar = () => {
           </Link>
           <ul className="mt-6">
             <SidebarItem label="Dashboard" href="/" icon={<HomeIcon />} />
+            <SidebarItem label="Settings" href="/settings" icon={<CogIcon />} />
           </ul>
           <div className="px-6 my-6">
             <Link
@@ -50,6 +52,7 @@ const Sidebar = () => {
           </Link>
           <ul className="mt-6">
             <SidebarItem label="Dashboard" href="/" icon={<HomeIcon />} />
+            <SidebarItem label="Settings" href="/settings" icon={<CogIcon />} />
           </ul>
           <div className="px-6 my-6">
             <button className="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">

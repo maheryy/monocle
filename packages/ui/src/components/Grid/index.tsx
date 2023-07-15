@@ -1,3 +1,4 @@
-import Grid from "@/components/Grid/Grid";
+import StaticGrid from "@/components/Grid/StaticGrid";
+import DynamicGrid from "@/components/Grid/DynamicGrid";
 
-export default Grid;
+export default { StaticGrid, DynamicGrid };
