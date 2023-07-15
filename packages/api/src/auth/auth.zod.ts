@@ -11,6 +11,3 @@ export const RegisterData = z.object({
   firstName: z.string(),
   lastName: z.string(),
 });
-
-export type TLoginData = z.infer<typeof LoginData>;
-export type TRegisterData = z.infer<typeof RegisterData>;
