@@ -23,9 +23,9 @@ importers:
 
   apps/blog:
     dependencies:
-      '@monocle/browser':
+      '@monocle/react':
         specifier: workspace:^
-        version: link:../../packages/browser
+        version: link:../../packages/react
       classnames:
         specifier: ^2.3.1
         version: 2.3.1

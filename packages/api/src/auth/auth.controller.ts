@@ -1,15 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { UnauthorizedError } from "../exceptions/UnauthorizedError";
 import {
   createUser,
   generateToken,
   getUserByEmail,
-  getUserById,
-  getUserWithoutPassword,
   hashPassword,
   verifyPassword,
 } from "./auth.service";
-import { NotFoundError } from "../exceptions/NotFoundError";
 import { BadRequestError } from "../exceptions/BadRequestError";
 
 export const login = async (
