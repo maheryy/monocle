@@ -111,7 +111,7 @@ To view the data, you can use [prisma studio](https://www.prisma.io/studio).
 pnpm exec prisma studio
 ```
 
-Or use mongo-express running on port [8081](http://localhost:8081).
+Or use mongo-express running on port [8888](http://localhost:8888).
 
 #### Packages
 
