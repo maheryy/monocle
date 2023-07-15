@@ -24,7 +24,7 @@ Use the `createMonocleServer` function to create an [express](https://expressjs.
 import { createMonocleServer } from "@ekezoh/monocle.api";
 
 const server = createMonocleServer({
-  corsOrigin: "https://example.com",
+  corsOptions: { origin: "https://example.com" },
 });
 
 server.listen(3000);

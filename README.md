@@ -94,6 +94,8 @@ To start the development database, run the following command:
 
 ```sh
 docker compose up -d
+
+docker compose exec mongo mongosh --eval 'rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "localhost:27017" }] })'
 ```
 
 To seed the database, run the following commands in the `packages/api` directory:

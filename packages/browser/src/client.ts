@@ -1,11 +1,18 @@
 import { BaseClient, Payload } from "@monocle/core";
 import { BrowserClientOptions } from "./types";
-import { onCLS, onLCP, onFID, onFCP, onTTFB, onINP } from "web-vitals";
+import {
+  onCLS,
+  onLCP,
+  onFID,
+  onFCP,
+  onTTFB,
+  onINP,
+  CLSReportCallback,
+} from "web-vitals";
 import {
   Subscription,
   bufferCount,
   bufferWhen,
-  filter,
   fromEvent,
   map,
   merge,
@@ -42,11 +49,7 @@ export class BrowserClient extends BaseClient {
   }
 
   event(name: string, payload?: Payload): void {
-    if (!payload) {
-      return this.send("/events", { name });
-    }
-
-    this.send("/events", { name, payload });
+    this.send("/events", { name, ...(payload ? { payload } : {}) });
   }
 
   metric(name: string, value: number): void {
@@ -57,8 +60,8 @@ export class BrowserClient extends BaseClient {
     this.send("/dimensions", { name, value });
   }
 
-  page(): void {
-    this.dimension("page", window.location.href);
+  page(url?: string): void {
+    this.dimension("page", url || window.location.href);
   }
 
   time(action: string, duration = performance.now()): void {
@@ -66,29 +69,16 @@ export class BrowserClient extends BaseClient {
   }
 
   vitals(): void {
-    onCLS(({ name, value }) => {
-      this.metric(name, value);
-    });
+    const onReport: CLSReportCallback = ({ name, value }) => {
+      return this.metric(name, value);
+    };
 
-    onLCP(({ name, value }) => {
-      this.metric(name, value);
-    });
-
-    onFID(({ name, value }) => {
-      this.metric(name, value);
-    });
-
-    onFCP(({ name, value }) => {
-      this.metric(name, value);
-    });
-
-    onTTFB(({ name, value }) => {
-      this.metric(name, value);
-    });
-
-    onINP(({ name, value }) => {
-      this.metric(name, value);
-    });
+    onCLS(onReport);
+    onLCP(onReport);
+    onFID(onReport);
+    onFCP(onReport);
+    onTTFB(onReport);
+    onINP(onReport);
   }
 
   mouse(): { subscribe: () => void; unsubscribe: () => void } {
