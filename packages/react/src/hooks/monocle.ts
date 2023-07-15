@@ -1,4 +1,4 @@
-import { BrowserClient } from "@monocle/browser";
+import { MonocleClient } from "@monocle/browser";
 import { createContext, useContext } from "react";
 
 export const MonocleContext = createContext<MonocleContext>(null!);
@@ -16,5 +16,5 @@ export const useMonocle = () => {
 };
 
 interface MonocleContext {
-  monocle: BrowserClient;
+  monocle: MonocleClient;
 }

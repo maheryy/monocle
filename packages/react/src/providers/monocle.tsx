@@ -1,4 +1,4 @@
-import { BrowserClient } from "@monocle/browser";
+import { MonocleClient } from "@monocle/browser";
 import { ReactNode, FC } from "react";
 import { MonocleContext } from "../hooks";
 
@@ -8,13 +8,13 @@ export const MonocleProvider: FC<MonocleProviderProps> = ({
   url,
   children,
 }) => {
-  const monocleInstance = new BrowserClient({
+  const monocle = MonocleClient.initialize({
     app: app,
     url: url,
   });
 
   return (
-    <MonocleContext.Provider value={{ monocle: monocleInstance }}>
+    <MonocleContext.Provider value={{ monocle }}>
       {children}
     </MonocleContext.Provider>
   );
