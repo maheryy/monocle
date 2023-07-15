@@ -63,18 +63,6 @@ export const register = async (
   }
 };
 
-export const profile = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const user = await getUserById(req.userId);
-    if (!user) {
-      throw new NotFoundError();
-    }
-    return res.status(200).json(getUserWithoutPassword(user));
-  } catch (error) {
-    next(error);
-  }
+export const profile = async (req: Request, res: Response) => {
+  return res.status(200).json(req.user);
 };
