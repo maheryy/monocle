@@ -60,8 +60,8 @@ export class BrowserClient extends BaseClient {
     this.send("/dimensions", { name, value });
   }
 
-  page(): void {
-    this.dimension("page", window.location.href);
+  page(url?: string): void {
+    this.dimension("page", url || window.location.href);
   }
 
   time(action: string, duration = performance.now()): void {
