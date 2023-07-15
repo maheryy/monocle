@@ -28,32 +28,37 @@
     "build:docker": "tsup docker/index.ts",
     "build:watch": "tsup --watch",
     "copy": "copyfiles \"README.md\" dist",
-    "dev": "tsnd docker/index.ts"
+    "dev": "tsnd --respawn --transpile-only docker/index.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.3.1",
     "@types/swagger-jsdoc": "^6.0.1",
     "@types/swagger-ui-express": "^4.1.3",
     "copyfiles": "^2.4.1",
-    "prisma": "^4.16.1",
+    "prisma": "^5.0.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsup": "^6.7.0",
     "type-fest": "^3.12.0"
   },
   "dependencies": {
-    "@prisma/client": "^4.16.1",
+    "@prisma/client": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
     "zod": "^3.21.4"
