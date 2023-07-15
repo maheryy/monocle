@@ -27,7 +27,7 @@ export class BrowserClient extends BaseClient {
     super({ app, url });
   }
 
-  private send(endpoint: string, payload: Payload): void {
+  private send(endpoint: string, payload: Record<string, unknown>): void {
     const body = new Blob(
       [
         JSON.stringify({
@@ -48,7 +48,7 @@ export class BrowserClient extends BaseClient {
     }
   }
 
-  event(name: string, payload?: Payload): void {
+  event(name: string, payload?: Record<string, unknown>): void {
     this.send("/events", { name, ...(payload ? { payload } : {}) });
   }
 
