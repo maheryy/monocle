@@ -5,8 +5,12 @@ import {
   generateToken,
   getUserByEmail,
   getUserById,
+  getUserWithoutPassword,
+  hashPassword,
   verifyPassword,
 } from "./auth.service";
+import { NotFoundError } from "../exceptions/NotFoundError";
+import { BadRequestError } from "../exceptions/BadRequestError";
 
 export const login = async (
   req: Request,
@@ -18,12 +22,12 @@ export const login = async (
 
     const user = await getUserByEmail(email);
     if (!user) {
-      throw new UnauthorizedError();
+      throw new BadRequestError("Invalid email or password");
     }
 
     const isValidPassword = await verifyPassword(password, user.password);
     if (!isValidPassword) {
-      throw new UnauthorizedError();
+      throw new BadRequestError("Invalid email or password");
     }
 
     const token = await generateToken({ userId: user.id });
@@ -40,11 +44,16 @@ export const register = async (
 ) => {
   try {
     const { email, password, firstName, lastName } = req.body;
+    if (await getUserByEmail(email)) {
+      throw new BadRequestError("Email already exists");
+    }
+
+    const hashedPassword = await hashPassword(password);
     const user = await createUser({
       email,
-      password,
       firstName,
       lastName,
+      password: hashedPassword,
     });
 
     const token = await generateToken({ userId: user.id });
@@ -61,7 +70,10 @@ export const profile = async (
 ) => {
   try {
     const user = await getUserById(req.userId);
-    return res.status(200).json(user);
+    if (!user) {
+      throw new NotFoundError();
+    }
+    return res.status(200).json(getUserWithoutPassword(user));
   } catch (error) {
     next(error);
   }

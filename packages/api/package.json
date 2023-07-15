@@ -28,7 +28,7 @@
     "build:docker": "tsup docker/index.ts",
     "build:watch": "tsup --watch",
     "copy": "copyfiles \"README.md\" dist",
-    "dev": "tsnd docker/index.ts"
+    "dev": "tsnd --respawn --transpile-only docker/index.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
