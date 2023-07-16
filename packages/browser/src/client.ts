@@ -1,5 +1,5 @@
-import { BaseClient, Payload } from "@monocle/core";
-import { BrowserClientOptions } from "./types";
+import { BaseClient } from "@monocle/core";
+import { MonocleClientOptions } from "./types";
 import {
   onCLS,
   onLCP,
@@ -20,14 +20,15 @@ import {
   throttleTime,
 } from "rxjs";
 
-export class BrowserClient extends BaseClient {
+export class MonocleClient extends BaseClient {
   private mousePositionsSubscription?: Subscription;
+  private static monocleInstance: MonocleClient;
 
-  constructor({ app, url }: BrowserClientOptions) {
+  private constructor({ app, url }: MonocleClientOptions) {
     super({ app, url });
   }
 
-  private send(endpoint: string, payload: Payload): void {
+  private send(endpoint: string, payload: Record<string, unknown>): void {
     const body = new Blob(
       [
         JSON.stringify({
@@ -48,7 +49,7 @@ export class BrowserClient extends BaseClient {
     }
   }
 
-  event(name: string, payload?: Payload): void {
+  event(name: string, payload?: Record<string, unknown>): void {
     this.send("/events", { name, ...(payload ? { payload } : {}) });
   }
 
@@ -124,5 +125,59 @@ export class BrowserClient extends BaseClient {
       subscribe,
       unsubscribe,
     };
+  }
+
+  static get monocle() {
+    return this.monocleInstance;
+  }
+
+  static initialize(options: MonocleClientOptions) {
+    if (this.monocleInstance) {
+      return this.monocleInstance;
+    }
+
+    this.monocleInstance = new MonocleClient(options);
+    return this.monocleInstance;
+  }
+
+  static isInitialized() {
+    if (!this.monocleInstance) {
+      throw new Error("Monocle has not been initialized.");
+    }
+  }
+
+  static event(name: string, payload?: Record<string, unknown>) {
+    this.isInitialized();
+    return this.monocleInstance.event(name, payload);
+  }
+
+  static metric(name: string, value: number) {
+    this.isInitialized();
+    return this.monocleInstance.metric(name, value);
+  }
+
+  static dimension(name: string, value: string) {
+    this.isInitialized();
+    return this.monocleInstance.dimension(name, value);
+  }
+
+  static page(url?: string) {
+    this.isInitialized();
+    return this.monocleInstance.page(url);
+  }
+
+  static time(action: string, duration = performance.now()) {
+    this.isInitialized();
+    return this.monocleInstance.time(action, duration);
+  }
+
+  static vitals() {
+    this.isInitialized();
+    return this.monocleInstance.vitals();
+  }
+
+  static mouse() {
+    this.isInitialized();
+    return this.monocleInstance.mouse();
   }
 }
