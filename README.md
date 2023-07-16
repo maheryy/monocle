@@ -32,8 +32,16 @@ docker compose -f docker-compose.demo.yml exec mongo mongosh --eval 'rs.initiate
 docker compose -f docker-compose.demo.yml exec monocle-api pnpm prisma db seed
 ```
 
-Go to [http://localhost:8080](http://localhost:8080) to view the blop example app.  
+Go to [http://localhost:8080](http://localhost:8080) to view the blop example app.
+
 Go to [http://localhost:8081](http://localhost:8081) to access the analytics back-office.
+
+You can use the following credentials to login to the back-office:
+
+```
+email: blog@demo.com
+password: password
+```
 
 ## Installation
 
