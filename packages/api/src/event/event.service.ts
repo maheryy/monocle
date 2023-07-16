@@ -1,5 +1,5 @@
 import prisma from "../database";
-import { TCreateEventData } from "./event.zod";
+import { TCreateEventData, TGetMouseEvents } from "./event.zod";
 
 export function createEvent(data: TCreateEventData) {
   return prisma.event.create({ data });
@@ -44,4 +44,89 @@ export async function getEventsStats() {
     }),
     {} as { [key: string]: { count: number; percentage: number } }
   );
+}
+
+export async function getMouseEvents({
+  page,
+  pageX,
+  pageY,
+  start,
+  end,
+}: TGetMouseEvents) {
+  const [result] = (await prisma.event.aggregateRaw({
+    pipeline: [
+      {
+        $unwind: "$payload.mousePositions",
+      },
+      {
+        $match: {
+          name: "mouse",
+          "payload.page": page,
+          $expr: end
+            ? {
+                $and: [
+                  {
+                    $gte: [
+                      "$createdAt",
+                      {
+                        $dateFromString: {
+                          dateString: start,
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    $lte: [
+                      "$createdAt",
+                      {
+                        $dateFromString: {
+                          dateString: end,
+                        },
+                      },
+                    ],
+                  },
+                ],
+              }
+            : {
+                $gte: [
+                  "$createdAt",
+                  {
+                    $dateFromString: {
+                      dateString: start,
+                    },
+                  },
+                ],
+              },
+          "payload.mousePositions.pageX": +pageX,
+          "payload.mousePositions.pageY": +pageY,
+        },
+      },
+      {
+        $project: {
+          "payload.mousePositions.clientX": 1,
+          "payload.mousePositions.clientY": 1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          mousePositions: {
+            $push: "$payload.mousePositions",
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          mousePositions: 1,
+        },
+      },
+    ],
+  })) as unknown as [{ mousePositions: { x: number; y: number }[] }];
+
+  if (!result) {
+    return [];
+  }
+
+  return result.mousePositions;
 }
