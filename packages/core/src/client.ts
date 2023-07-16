@@ -9,16 +9,23 @@ export abstract class BaseClient implements Client {
   /**
    * The unique ID of the user
    */
-  userId: string = crypto.randomUUID();
+  visitorId: string;
 
   /**
-   * The URL of the api
+   * The public key of the app
    */
-  url: string;
+  appId: string;
 
-  constructor({ app, url }: ClientOptions) {
-    this.app = app;
-    this.url = url;
+  /**
+   * Monocle server host
+   */
+  host: string;
+
+  constructor(options: ClientOptions) {
+    this.app = options.app;
+    this.host = options.host;
+    this.appId = options.appId;
+    this.visitorId = crypto.randomUUID();
   }
 
   /**
@@ -41,17 +48,17 @@ export abstract class BaseClient implements Client {
    */
   identify(userId?: string, payload?: Payload): void {
     if (!userId) {
-      this.userId = crypto.randomUUID();
+      this.visitorId = crypto.randomUUID();
 
-      return this.event("identify", { userId: this.userId });
+      return this.event("identify", { userId: this.visitorId });
     }
 
-    this.userId = userId;
+    this.visitorId = userId;
 
     if (!payload) {
-      return this.event("identify", { userId: this.userId });
+      return this.event("identify", { userId: this.visitorId });
     }
 
-    this.event("identify", { userId: this.userId, ...payload });
+    this.event("identify", { userId: this.visitorId, ...payload });
   }
 }

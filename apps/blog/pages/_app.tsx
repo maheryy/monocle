@@ -10,17 +10,13 @@ import {
   useWebVitals,
 } from "@monocle/react";
 
-const MONOCLE_URL = "http://localhost:3000";
-const MONOCLE_APP = "blog";
-const MONOCLE_ID = "MCL-XXXXXX";
+const APP_NAME = "blog";
+const MONOCLE_ID = "MCL-AZ209DSD";
+const MONOCLE_HOST = "http://localhost:3000";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <MonocleProvider
-      app={MONOCLE_APP}
-      identifier={MONOCLE_ID}
-      url={MONOCLE_URL}
-    >
+    <MonocleProvider app={APP_NAME} identifier={MONOCLE_ID} host={MONOCLE_HOST}>
       <Component {...pageProps} />;
       <TestComponent />
     </MonocleProvider>

@@ -1,8 +1,6 @@
 import prisma from "../database";
-import { TCreateEvent } from "./event";
+import { TCreateEventData } from "./event.zod";
 
-export function createEvent(data: TCreateEvent) {
-  return prisma.event.create({
-    data,
-  });
+export function createEvent(data: TCreateEventData) {
+  return prisma.event.create({ data });
 }

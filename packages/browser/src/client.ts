@@ -24,8 +24,8 @@ export class MonocleClient extends BaseClient {
   private mousePositionsSubscription?: Subscription;
   private static monocleInstance: MonocleClient;
 
-  private constructor({ app, url }: MonocleClientOptions) {
-    super({ app, url });
+  private constructor(options: MonocleClientOptions) {
+    super(options);
   }
 
   private send(endpoint: string, payload: Record<string, unknown>): void {
@@ -34,16 +34,16 @@ export class MonocleClient extends BaseClient {
         JSON.stringify({
           ...payload,
           app: this.app,
-          userId: this.userId,
+          visitorId: this.visitorId,
+          appId: this.appId,
+          source: "browser",
         }),
       ],
       { type: "application/json" }
     );
 
-    const url = new URL(endpoint, this.url);
-
+    const url = new URL(endpoint, this.host);
     const isQueued = navigator.sendBeacon(url, body);
-
     if (!isQueued) {
       fetch(url, { body, method: "POST", keepalive: true });
     }
