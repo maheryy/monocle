@@ -23,7 +23,11 @@ export class MonocleClient extends BaseClient {
       source: "node",
     };
 
-    this.w.post(data, url);
+    this.w
+      .post(data, url)
+      .res()
+      .then((res) => console.info(`[Monocle] Request ${url} complete`))
+      .catch((err) => console.error(`[Monocle] Error: ${err.message}`));
   }
 
   event(name: string, payload?: Record<string, unknown>): void {

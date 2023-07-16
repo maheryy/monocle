@@ -9,14 +9,11 @@ import {
   usePageView,
   useWebVitals,
 } from "@monocle/react";
-
-const APP_NAME = "blog";
-const MONOCLE_ID = "MCL-AZ209DSD";
-const MONOCLE_HOST = "http://localhost:3000";
+import { MONOCLE_HOST, MONOCLE_ID } from "../lib/constants";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <MonocleProvider app={APP_NAME} identifier={MONOCLE_ID} host={MONOCLE_HOST}>
+    <MonocleProvider app={"blog"} identifier={MONOCLE_ID} host={MONOCLE_HOST}>
       <Component {...pageProps} />
       <TestComponent />
     </MonocleProvider>

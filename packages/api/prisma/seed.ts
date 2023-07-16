@@ -7,6 +7,7 @@ import {
 } from "../src/credential/credential.service";
 
 const DEFAULT_APP_ID = "MCL-AZ209DSD";
+const DEFAULT_APP_SECRET = "mcl_ksl6yyvp8k3myppbyfkxxucwb0l4r1qg";
 
 const eventNames = [
   "Product added to cart",
@@ -145,7 +146,7 @@ async function main() {
     const createdUsers = await tx.user.findMany();
     if (!createdUsers.length) return;
 
-    const usedKeys: string[] = [DEFAULT_APP_ID];
+    const usedKeys: string[] = [DEFAULT_APP_ID, DEFAULT_APP_SECRET];
     const credentials: Prisma.CredentialCreateManyInput[] = createdUsers.map(
       (user) => {
         let secretKey: string, publicKey: string;
@@ -161,6 +162,7 @@ async function main() {
         // assign default app id to blog user
         if (user.email === users[0].email) {
           publicKey = DEFAULT_APP_ID;
+          secretKey = DEFAULT_APP_SECRET;
         } else {
           usedKeys.push(secretKey, publicKey);
         }

@@ -1,6 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { MonocleClient } from "@monocle/node";
+import { MONOCLE_HOST, MONOCLE_ID, MONOCLE_SECRET } from "../../lib/constants";
 
 const posts = [];
+
+MonocleClient.initialize({
+  app: "blog-api",
+  appId: MONOCLE_ID,
+  host: MONOCLE_HOST,
+  secret: MONOCLE_SECRET,
+});
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -24,6 +33,12 @@ const getPosts = async (req: NextApiRequest, res: NextApiResponse) => {
 const createPost = async (req: NextApiRequest, res: NextApiResponse) => {
   const post = req.body;
   posts.push(post);
+
+  MonocleClient.event("post_created", {
+    post_id: post.id,
+    post_title: post.title,
+  });
+
   res.status(201).json(post);
 };
 
