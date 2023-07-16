@@ -6,7 +6,7 @@ import { Data } from "@/types/data";
 import { useEffect, useState } from "react";
 import ToolBox from "@/components/Toolbox/Toolbox";
 import { Item } from "@/types/item";
-import { remove, retrieve, store } from "@/utils/storage";
+import { store } from "@/utils/storage";
 import { StorageKey } from "@/types/storage";
 import GridDeletableCard from "./GridDeletableCard";
 
@@ -26,7 +26,6 @@ const generateLayout = (items: Data[]): Layout[] => {
 };
 
 const DynamicGrid = () => {
-  const [items, setItems] = useState<Data[]>([]);
   const [currentBreakpoint, setCurrentBreakpoint] = useState<string>("lg");
   const [layouts, setLayouts] = useState<{ [key: string]: Layout[] }>({
     lg: [],
@@ -40,7 +39,6 @@ const DynamicGrid = () => {
   useEffect(() => {
     getData()
       .then((data) => {
-        setItems(data);
         return data;
       })
       .then((i) => {
@@ -75,6 +73,7 @@ const DynamicGrid = () => {
     setLayouts((prevState) => ({
       ...prevState,
       [currentBreakpoint]: prevState[currentBreakpoint].filter(
+        // @ts-ignore
         ({ i }) => i !== item.i
       ),
     }));
@@ -87,6 +86,7 @@ const DynamicGrid = () => {
         ({ i }) => i !== item.i
       ),
     }));
+    // @ts-ignore
     setLayouts((prevState) => ({
       ...prevState,
       [currentBreakpoint]: [...prevState[currentBreakpoint], item],
