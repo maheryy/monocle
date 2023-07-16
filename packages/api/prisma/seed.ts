@@ -82,12 +82,16 @@ const userAgentDimensions = Array.from({ length: 25 }).map(() => ({
   value: faker.internet.userAgent(),
 }));
 
+const urls = Array.from({ length: 10 }).map(() => faker.internet.url());
+
+const urls = Array.from({ length: 10 }).map(() => faker.internet.url());
+
 const pageViewDimensions = Array.from({ length: 25 }).map(() => ({
   name: "PageView",
   app: "react",
   appId: DEFAULT_APP_ID,
   visitorId: faker.string.uuid(),
-  value: faker.internet.url(),
+  value: faker.helpers.arrayElement(urls),
 }));
 
 const defaultPassword = bcypt.hashSync("password", 10);

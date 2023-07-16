@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { validate } from "../middlewares/validate";
 import { CreateDimension } from "./dimension.zod";
-import { createDimension, getUserAgentsStats } from "./dimension.controller";
+import {
+  createDimension,
+  getPageViewsStats,
+  getUserAgentsStats,
+} from "./dimension.controller";
 import { verifyApp } from "../middlewares/verify";
 
 const dimensionRouter: Router = Router();

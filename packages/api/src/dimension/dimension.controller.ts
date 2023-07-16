@@ -21,3 +21,9 @@ export async function getUserAgentsStats(req: Request, res: Response) {
 
   return res.status(200).json(stats);
 }
+
+export async function getPageViewsStats(req: Request, res: Response) {
+  const stats = await dimensionService.getPageViewsStats();
+
+  return res.status(200).json(stats);
+}
