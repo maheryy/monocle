@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as eventService from "./event.service";
 import { TCreateEventData } from "./event.zod";
-import { TGetMouseEvents } from "./event";
+import { TGetMouseEvents } from "./event.zod";
 
 export async function createEvent(
   req: Request,

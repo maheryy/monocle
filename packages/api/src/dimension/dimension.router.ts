@@ -7,6 +7,7 @@ import {
   getUserAgentsStats,
 } from "./dimension.controller";
 import { verifyApp } from "../middlewares/verify";
+import { authenticate } from "../middlewares/auth";
 
 const dimensionRouter: Router = Router();
 
@@ -17,6 +18,8 @@ dimensionRouter.post(
   createDimension
 );
 
-dimensionRouter.get("/user-agents/stats", getUserAgentsStats);
+dimensionRouter.get("/user-agents/stats", authenticate, getUserAgentsStats);
+
+dimensionRouter.get("/page-views/stats", authenticate, getPageViewsStats);
 
 export default dimensionRouter;
