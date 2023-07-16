@@ -6,6 +6,8 @@ import {
   generateSecretKey,
 } from "../src/credential/credential.service";
 
+const DEFAULT_APP_ID = "MCL-AZ209DSD";
+
 const eventNames = [
   "Product added to cart",
   "Product removed from cart",
@@ -13,10 +15,11 @@ const eventNames = [
   "Product reviewed",
 ];
 
-const customEvents = Array.from({ length: 50 }).map(() => ({
+const customEvents = Array.from({ length: 25 }).map(() => ({
   name: faker.helpers.arrayElement(eventNames),
   app: "react",
-  userId: faker.string.uuid(),
+  appId: DEFAULT_APP_ID,
+  visitorId: faker.string.uuid(),
   payload: {
     productId: faker.string.uuid(),
     productPrice: faker.commerce.price(),
@@ -40,7 +43,8 @@ const mouseEvents = Array.from({ length: 25 }).map(() => {
   return {
     name: "mouse",
     app: "react",
-    userId: faker.string.uuid(),
+    appId: DEFAULT_APP_ID,
+    visitorId: faker.string.uuid(),
     payload: {
       mousePositions,
       page: faker.internet.url(),
@@ -57,29 +61,32 @@ const webVitals = {
   INP: [0, 1000, "int"] as const,
 };
 
-const webVitalMetrics = Array.from({ length: 50 }).map(() => {
+const webVitalMetrics = Array.from({ length: 25 }).map(() => {
   const [name, value] = faker.helpers.objectEntry(webVitals);
   const [min, max, kind] = value;
 
   return {
     name,
     app: "react",
-    userId: faker.string.uuid(),
+    appId: DEFAULT_APP_ID,
+    visitorId: faker.string.uuid(),
     value: faker.number[kind]({ min, max }),
   };
 });
 
-const userAgentDimensions = Array.from({ length: 50 }).map(() => ({
+const userAgentDimensions = Array.from({ length: 25 }).map(() => ({
   name: "user-agent",
   app: "react",
-  userId: faker.string.uuid(),
+  appId: DEFAULT_APP_ID,
+  visitorId: faker.string.uuid(),
   value: faker.internet.userAgent(),
 }));
 
-const pageViewDimensions = Array.from({ length: 50 }).map(() => ({
+const pageViewDimensions = Array.from({ length: 25 }).map(() => ({
   name: "page-view",
   app: "react",
-  userId: faker.string.uuid(),
+  appId: DEFAULT_APP_ID,
+  visitorId: faker.string.uuid(),
   value: faker.internet.url(),
 }));
 
@@ -135,11 +142,11 @@ async function main() {
   ]);
 
   await prisma.$transaction(async (tx) => {
-    const users = await tx.user.findMany();
-    if (!users.length) return;
+    const createdUsers = await tx.user.findMany();
+    if (!createdUsers.length) return;
 
-    const usedKeys: string[] = [];
-    const credentials: Prisma.CredentialCreateManyInput[] = users.map(
+    const usedKeys: string[] = [DEFAULT_APP_ID];
+    const credentials: Prisma.CredentialCreateManyInput[] = createdUsers.map(
       (user) => {
         let secretKey: string, publicKey: string;
 
@@ -151,7 +158,13 @@ async function main() {
           publicKey = generatePublicKey();
         } while (usedKeys.includes(publicKey));
 
-        usedKeys.push(secretKey, publicKey);
+        // assign default app id to blog user
+        if (user.email === users[0].email) {
+          publicKey = DEFAULT_APP_ID;
+        } else {
+          usedKeys.push(secretKey, publicKey);
+        }
+
         return {
           userId: user.id,
           secretKey: secretKey,
@@ -160,14 +173,16 @@ async function main() {
       }
     );
 
-    const profiles: Prisma.ProfileCreateManyInput[] = users.map((user) => ({
-      userId: user.id,
-      website: "http://localhost:8080",
-      company: faker.company.name(),
-      kbis: faker.string.uuid(),
-      phone: faker.phone.number(),
-      address: faker.location.streetAddress(),
-    }));
+    const profiles: Prisma.ProfileCreateManyInput[] = createdUsers.map(
+      (user) => ({
+        userId: user.id,
+        website: "http://localhost:8080",
+        company: faker.company.name(),
+        kbis: faker.string.uuid(),
+        phone: faker.phone.number(),
+        address: faker.location.streetAddress(),
+      })
+    );
 
     return await Promise.all([
       tx.credential.createMany({ data: credentials }),
