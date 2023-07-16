@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as metricService from "./metric.service";
-import { TCreateMetricData } from "./metric.zod";
+import { TCreateMetric } from "./metric.zod";
 
 export async function createMetric(
   req: Request,
@@ -8,7 +8,7 @@ export async function createMetric(
   next: NextFunction
 ) {
   try {
-    const data = req.body as TCreateMetricData;
+    const data = req.body as TCreateMetric;
     const metric = await metricService.createMetric(data);
 
     return res.status(204).end();
@@ -17,8 +17,11 @@ export async function createMetric(
   }
 }
 
-export async function getMetricStats({ params }: Request, res: Response) {
-  const stats = await metricService.getMetricStats(params.name);
+export async function getMetricStats(
+  { params, appId }: Request,
+  res: Response
+) {
+  const stats = await metricService.getMetricStats(appId, params.name);
 
   return res.status(200).json(stats);
 }
