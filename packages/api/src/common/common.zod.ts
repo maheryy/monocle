@@ -8,3 +8,5 @@ export const BaseBody = z.object({
   secret: z.string().optional(),
   source: z.enum(["browser", "node"]),
 });
+
+export type TBaseBody = z.infer<typeof BaseBody>;

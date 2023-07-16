@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as dimensionService from "./dimension.service";
-import { TCreateDimensionBody } from "./dimension.zod";
+import { TCreateDimensionData } from "./dimension.zod";
 
 export async function createDimension(
   req: Request,
@@ -8,7 +8,7 @@ export async function createDimension(
   next: NextFunction
 ) {
   try {
-    const { source, secret, ...data } = req.body as TCreateDimensionBody;
+    const data = req.body as TCreateDimensionData;
     const dimension = await dimensionService.createDimension(data);
     return res.status(204).end();
   } catch (error) {

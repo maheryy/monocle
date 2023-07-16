@@ -11,7 +11,7 @@ import {
 } from "@monocle/react";
 
 const APP_NAME = "blog";
-const MONOCLE_ID = "MCL-XXXXXX";
+const MONOCLE_ID = "MCL-AZ209DSD";
 const MONOCLE_HOST = "http://localhost:3000";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {

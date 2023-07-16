@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as eventService from "./event.service";
-import { TCreateEventBody } from "./event.zod";
+import { TCreateEventData } from "./event.zod";
 
 export async function createEvent(
   req: Request,
@@ -8,7 +8,7 @@ export async function createEvent(
   next: NextFunction
 ) {
   try {
-    const { source, secret, ...data } = req.body as TCreateEventBody;
+    const data = req.body as TCreateEventData;
     const event = await eventService.createEvent(data);
 
     return res.status(204).end();
