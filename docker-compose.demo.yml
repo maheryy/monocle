@@ -12,8 +12,8 @@ services:
     environment:
       - MONOCLE_SECRET=mcl_ksl6yyvp8k3myppbyfkxxucwb0l4r1qg
 
-  monocle-server:
-    container_name: moncole-server
+  monocle-api:
+    container_name: moncole-api
     build:
       context: .
       dockerfile: packages/api/Dockerfile
