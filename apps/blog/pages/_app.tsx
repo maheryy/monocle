@@ -11,10 +11,11 @@ import {
 } from "@monocle/react";
 import { MONOCLE_HOST, MONOCLE_ID } from "../lib/constants";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: AppProps) => {
+  const Page = Component as any;
   return (
     <MonocleProvider app={"blog"} identifier={MONOCLE_ID} host={MONOCLE_HOST}>
-      <Component {...pageProps} />
+      <Page {...pageProps} />
       <TestComponent />
     </MonocleProvider>
   );
@@ -50,4 +51,4 @@ const TestComponent = () => {
   return <div></div>;
 };
 
-export default MyApp;
+export default App;
