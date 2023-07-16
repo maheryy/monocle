@@ -1,8 +1,6 @@
 import prisma from "../database";
-import { TCreateDimension } from "./dimension";
+import { TCreateDimensionData } from "./dimension.zod";
 
-export function createDimension(data: TCreateDimension) {
-  return prisma.dimension.create({
-    data,
-  });
+export function createDimension(data: TCreateDimensionData) {
+  return prisma.dimension.create({ data });
 }

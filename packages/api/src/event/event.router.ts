@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { createEvent } from "./event.controller";
 import { validate } from "../middlewares/validate";
-import { CreateEvent } from "./event";
+import { CreateEvent } from "./event.zod";
 
 const eventRouter: Router = Router();
 

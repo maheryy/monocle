@@ -1,8 +1,6 @@
 import prisma from "../database";
-import { TCreateMetric } from "./metric";
+import { TCreateMetricData } from "./metric.zod";
 
-export function createMetric(data: TCreateMetric) {
-  return prisma.metric.create({
-    data,
-  });
+export function createMetric(data: TCreateMetricData) {
+  return prisma.metric.create({ data });
 }
