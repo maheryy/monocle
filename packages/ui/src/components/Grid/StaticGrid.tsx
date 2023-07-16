@@ -6,10 +6,16 @@ import { useEffect, useState } from "react";
 import { Data, EDataComponent } from "@/types/data";
 import Metric from "@/components/Metric";
 import Dimension from "@/components/Dimension";
+import { retrieve } from "@/utils/storage";
+import { StorageKey } from "@/types/storage";
+
+const ReactGridLayout = WidthProvider(Responsive);
 
 const Grid = () => {
-  const ReactGridLayout = WidthProvider(Responsive);
   const [data, setData] = useState<Data[]>([]);
+  const s = retrieve(StorageKey.LAYOUTS);
+
+  console.log(s);
 
   useEffect(() => {
     void (async () => {
@@ -41,7 +47,7 @@ const Grid = () => {
         if (item.component === EDataComponent.METRICS) {
           props = { x: 1 };
           return (
-            <div key={item.key}>
+            <div key={item.key} className="bg-blue-100">
               <GridCard title={item.name}>
                 <Metric {...props} />
               </GridCard>

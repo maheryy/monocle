@@ -1,6 +1,6 @@
 const GridCard = ({ title, children }: GridCardProps) => {
   return (
-    <div className="p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 h-full">
+    <div className="p-4 bg-white  shadow-xs dark:bg-gray-800 h-full rounded-lg">
       <h4 className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
         {title}
       </h4>
