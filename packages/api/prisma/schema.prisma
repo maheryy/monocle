@@ -17,6 +17,8 @@ model Event {
   name      String
   payload   Json
   createdAt DateTime @default(now())
+
+  @@map("events")
 }
 
 model Metric {
@@ -26,6 +28,8 @@ model Metric {
   name      String
   value     Float
   createdAt DateTime @default(now())
+
+  @@map("metrics")
 }
 
 model Dimension {
@@ -35,12 +39,48 @@ model Dimension {
   name      String
   value     String
   createdAt DateTime @default(now())
+
+  @@map("dimensions")
 }
 
 model User {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  email     String @unique
-  password  String
-  firstName String
-  lastName  String
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  email      String      @unique
+  password   String
+  firstName  String
+  lastName   String
+  role       String      @default("user")
+  profile    Profile?
+  credential Credential?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("users")
+}
+
+model Profile {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  kbis      String
+  company   String
+  phone     String
+  address   String
+  website   String
+  userId    String   @unique @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+model Credential {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  publicKey String   @unique
+  secretKey String   @unique
+  userId    String   @unique @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("credentials")
 }

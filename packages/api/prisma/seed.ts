@@ -1,6 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
 import bcypt from "bcrypt";
+import {
+  generatePublicKey,
+  generateSecretKey,
+} from "../src/credential/credential.service";
 
 const eventNames = [
   "Product added to cart",
@@ -112,14 +116,16 @@ const users = [
 const prisma = new PrismaClient();
 
 async function main() {
-  await Promise.all([
-    prisma.user.deleteMany(),
+  await prisma.$transaction([
     prisma.event.deleteMany(),
     prisma.metric.deleteMany(),
     prisma.dimension.deleteMany(),
+    prisma.credential.deleteMany(),
+    prisma.profile.deleteMany(),
+    prisma.user.deleteMany(),
   ]);
 
-  await Promise.all([
+  await prisma.$transaction([
     prisma.user.createMany({ data: [...users] }),
     prisma.event.createMany({ data: [...customEvents, ...mouseEvents] }),
     prisma.metric.createMany({ data: webVitalMetrics }),
@@ -127,6 +133,49 @@ async function main() {
       data: [...userAgentDimensions, ...pageViewDimensions],
     }),
   ]);
+
+  await prisma.$transaction(async (tx) => {
+    const users = await tx.user.findMany();
+    if (!users.length) return;
+
+    const usedKeys: string[] = [];
+    const credentials: Prisma.CredentialCreateManyInput[] = users.map(
+      (user) => {
+        let secretKey: string, publicKey: string;
+
+        do {
+          secretKey = generateSecretKey();
+        } while (usedKeys.includes(secretKey));
+
+        do {
+          publicKey = generatePublicKey();
+        } while (usedKeys.includes(publicKey));
+
+        usedKeys.push(secretKey, publicKey);
+        return {
+          userId: user.id,
+          secretKey: secretKey,
+          publicKey: publicKey,
+        };
+      }
+    );
+
+    const profiles: Prisma.ProfileCreateManyInput[] = users.map((user) => ({
+      userId: user.id,
+      website: "http://localhost:8080",
+      company: faker.company.name(),
+      kbis: faker.string.uuid(),
+      phone: faker.phone.number(),
+      address: faker.location.streetAddress(),
+    }));
+
+    return await Promise.all([
+      tx.credential.createMany({ data: credentials }),
+      tx.profile.createMany({ data: profiles }),
+    ]);
+  });
+
+  console.log("Seeding completed");
 }
 
 main()
