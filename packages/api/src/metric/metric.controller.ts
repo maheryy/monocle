@@ -16,3 +16,9 @@ export async function createMetric(
     next(error);
   }
 }
+
+export async function getMetricStats({ params }: Request, res: Response) {
+  const stats = await metricService.getMetricStats(params.name);
+
+  return res.status(200).json(stats);
+}

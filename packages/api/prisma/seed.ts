@@ -76,22 +76,25 @@ const webVitalMetrics = Array.from({ length: 25 }).map(() => {
 });
 
 const userAgentDimensions = Array.from({ length: 25 }).map(() => ({
-  name: "user-agent",
+  name: "UserAgent",
   app: "react",
   appId: DEFAULT_APP_ID,
   visitorId: faker.string.uuid(),
   value: faker.internet.userAgent(),
 }));
 
+const urls = Array.from({ length: 10 }).map(() => faker.internet.url());
+
 const pageViewDimensions = Array.from({ length: 25 }).map(() => ({
-  name: "page-view",
+  name: "PageView",
   app: "react",
   appId: DEFAULT_APP_ID,
   visitorId: faker.string.uuid(),
-  value: faker.internet.url(),
+  value: faker.helpers.arrayElement(urls),
 }));
 
 const defaultPassword = bcypt.hashSync("password", 10);
+
 const users = [
   {
     email: "blog@demo.com",

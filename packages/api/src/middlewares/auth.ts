@@ -26,7 +26,7 @@ export const authenticate = async (
     const user = await getUserById(payload.userId);
 
     if (!user) {
-      throw new UnauthorizedError("User can't found");
+      throw new UnauthorizedError("User can't be found");
     }
 
     req.user = getUserWithoutPassword(user);
