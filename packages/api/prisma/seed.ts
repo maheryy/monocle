@@ -75,7 +75,7 @@ const webVitalMetrics = Array.from({ length: 25 }).map(() => {
 });
 
 const userAgentDimensions = Array.from({ length: 25 }).map(() => ({
-  name: "user-agent",
+  name: "UserAgent",
   app: "react",
   appId: DEFAULT_APP_ID,
   visitorId: faker.string.uuid(),
@@ -83,7 +83,7 @@ const userAgentDimensions = Array.from({ length: 25 }).map(() => ({
 }));
 
 const pageViewDimensions = Array.from({ length: 25 }).map(() => ({
-  name: "page-view",
+  name: "PageView",
   app: "react",
   appId: DEFAULT_APP_ID,
   visitorId: faker.string.uuid(),

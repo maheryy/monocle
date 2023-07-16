@@ -127,6 +127,10 @@ export class MonocleClient extends BaseClient {
     };
   }
 
+  ua(): void {
+    this.dimension("UserAgent", navigator.userAgent);
+  }
+
   static get monocle() {
     return this.monocleInstance;
   }
@@ -179,5 +183,10 @@ export class MonocleClient extends BaseClient {
   static mouse() {
     this.isInitialized();
     return this.monocleInstance.mouse();
+  }
+
+  static ua() {
+    this.isInitialized();
+    return this.monocleInstance.ua();
   }
 }

@@ -15,3 +15,9 @@ export async function createDimension(
     next(error);
   }
 }
+
+export async function getUserAgentsStats(req: Request, res: Response) {
+  const stats = await dimensionService.getUserAgentsStats();
+
+  return res.status(200).json(stats);
+}
