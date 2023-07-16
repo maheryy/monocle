@@ -9,16 +9,23 @@ export abstract class BaseClient implements Client {
   /**
    * The unique ID of the user
    */
-  userId: string = crypto.randomUUID();
+  userId: string;
 
   /**
-   * The URL of the api
+   * The public key of the app
    */
-  url: string;
+  identifier: string;
 
-  constructor({ app, url }: ClientOptions) {
-    this.app = app;
-    this.url = url;
+  /**
+   * Monocle server host
+   */
+  host: string;
+
+  constructor(options: ClientOptions) {
+    this.app = options.app;
+    this.host = options.host;
+    this.identifier = options.identifier;
+    this.userId = crypto.randomUUID();
   }
 
   /**
