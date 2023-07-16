@@ -5,6 +5,7 @@ import {
   generatePublicKey,
   generateSecretKey,
 } from "../src/credential/credential.service";
+import { getRandom } from "random-useragent";
 
 const DEFAULT_APP_ID = "MCL-AZ209DSD";
 const DEFAULT_APP_SECRET = "mcl_ksl6yyvp8k3myppbyfkxxucwb0l4r1qg";
@@ -80,7 +81,7 @@ const userAgentDimensions = Array.from({ length: 25 }).map(() => ({
   app: "react",
   appId: DEFAULT_APP_ID,
   visitorId: faker.string.uuid(),
-  value: faker.internet.userAgent(),
+  value: getRandom(),
 }));
 
 const urls = Array.from({ length: 10 }).map(() => faker.internet.url());
