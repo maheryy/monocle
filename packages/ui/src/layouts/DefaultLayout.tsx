@@ -8,19 +8,19 @@ import LayoutProvider from "@/providers/LayoutProvider";
 const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <LayoutProvider>
-      {/* <UserProvider> */}
-      <Sidebar />
-      <div className="app-content">
-        <Header />
-        <div className="bg-gray-50 dark:bg-gray-900 h-full">
-          <main>
-            <Outlet />
-            {children}
-          </main>
+      <UserProvider>
+        <Sidebar />
+        <div className="app-content">
+          <Header />
+          <div className="bg-gray-50 dark:bg-gray-900 h-full">
+            <main>
+              <Outlet />
+              {children}
+            </main>
+          </div>
         </div>
-      </div>
-      {/* </UserProvider> */}
-    </LayoutProvider >
+      </UserProvider>
+    </LayoutProvider>
   );
 };
 

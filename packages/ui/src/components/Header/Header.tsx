@@ -5,18 +5,17 @@ import LightThemeIcon from "@icons/sun.svg";
 import DarkThemeIcon from "@icons/moon.svg";
 import Avatar from "@icons/avatar.svg";
 import HeaderMenu from "@/components/Header/HeaderMenu";
-//import { useAuthContext } from "@/hooks/context";
+import { useAuthContext } from "@/hooks/context";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { toggleSidebar, toggleTheme, theme } = useLayoutContext();
-  //const { user, invalidate } = useAuthContext();
+  const { user, invalidate } = useAuthContext();
   const navigate = useNavigate();
-  const username = "Admin" //user ? `${user.firstname} ${user.lastname}` : "Admin";
-
+  const username = user ? `${user.firstName} ${user.lastName}` : "Admin";
 
   const handleLogout = () => {
-    //invalidate();
+    invalidate();
     navigate("/login");
   };
 
@@ -50,7 +49,12 @@ const Header = () => {
             label={username}
             icon={<Avatar className="w-6 h-6" />}
             items={[
-              { icon: <LogoutIcon />, label: "Log out", onClick: handleLogout, href: "#" },
+              {
+                icon: <LogoutIcon />,
+                label: "Log out",
+                onClick: handleLogout,
+                href: "#",
+              },
             ]}
           />
         </ul>
