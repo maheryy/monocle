@@ -45,7 +45,9 @@ export class MonocleClient extends BaseClient {
     const url = new URL(endpoint, this.host);
     const isQueued = navigator.sendBeacon(url, body);
     if (!isQueued) {
-      fetch(url, { body, method: "POST", keepalive: true });
+      fetch(url, { body, method: "POST", keepalive: true })
+        // .then(() => console.info(`[Monocle] Request ${url} complete`))
+        .catch((err) => console.error(`[Monocle] Error: ${err.message}`));
     }
   }
 
