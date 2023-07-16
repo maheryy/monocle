@@ -34,8 +34,8 @@ export class MonocleClient extends BaseClient {
         JSON.stringify({
           ...payload,
           app: this.app,
-          userId: this.userId,
-          appId: this.identifier,
+          visitorId: this.visitorId,
+          appId: this.appId,
           source: "browser",
         }),
       ],

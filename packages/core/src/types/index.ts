@@ -4,9 +4,9 @@ export interface Payload extends JsonObject {}
 
 export interface Client {
   app: string;
-  identifier: string;
+  appId: string;
   host: string;
-  userId: string;
+  visitorId: string;
   identify(userId?: string, payload?: Payload): void;
   event(eventName: string, payload?: Record<string, unknown>): void;
   metric(metricName: string, value: number): void;
@@ -15,6 +15,6 @@ export interface Client {
 
 export interface ClientOptions {
   app: string;
-  identifier: string;
+  appId: string;
   host: string;
 }

@@ -11,7 +11,7 @@ export const MonocleProvider: FC<MonocleProviderProps> = ({
   const monocle = MonocleClient.initialize({
     app,
     host,
-    identifier,
+    appId: identifier,
   });
 
   return (
