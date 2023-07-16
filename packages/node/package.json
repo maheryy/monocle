@@ -1,0 +1,27 @@
+{
+  "name": "@monocle/node",
+  "version": "0.1.0",
+  "author": "Shifter Shop",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "tsup": "^6.7.0"
+  },
+  "dependencies": {
+    "@monocle/core": "workspace:^",
+    "wretch": "^2.5.2"
+  }
+}

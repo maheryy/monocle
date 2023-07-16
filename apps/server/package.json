@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && node dist/index.js",
+    "start": "tsc && node dist/index.js",
+    "test": "echo \"No test specified\""
+  },
+  "dependencies": {
+    "@ekezoh/monocle.api": "workspace:^"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}

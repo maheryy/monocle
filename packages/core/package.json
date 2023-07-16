@@ -1,0 +1,24 @@
+{
+  "name": "@monocle/core",
+  "version": "0.1.0",
+  "author": "Shifter Shop",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch"
+  },
+  "devDependencies": {
+    "tsup": "^6.7.0",
+    "type-fest": "^3.12.0"
+  }
+}

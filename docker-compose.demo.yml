@@ -1,0 +1,46 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: apps/blog/Dockerfile
+      args:
+        - NEXT_PUBLIC_MONOCLE_HOST=http://localhost:3000
+        - NEXT_PUBLIC_MONOCLE_ID=MCL-AZ209DSD
+    ports:
+      - 8080:8080
+    environment:
+      - MONOCLE_SECRET=mcl_ksl6yyvp8k3myppbyfkxxucwb0l4r1qg
+
+  monocle-api:
+    container_name: moncole-api
+    build:
+      context: .
+      dockerfile: packages/api/Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - MONOCLE_CORS_ORIGIN=http://localhost:8080
+      - MONOCLE_DATABASE_URL=mongodb://mongo:27017/monocle?retryWrites=false&w=majority&authSource=admin
+      - JWT_SECRET=ksl6yyvp8k3myppbyfkxxucwb0l4r1qg
+    depends_on:
+      - mongo
+
+  monocle-ui:
+    container_name: monocle-ui
+    build:
+      context: .
+      dockerfile: packages/ui/Dockerfile
+      args:
+        - VITE_API_URL=http://localhost:3000
+    ports:
+      - 8081:80
+
+  mongo:
+    container_name: mongo
+    image: mongo:6
+    ports:
+      - 27017:27017
+    volumes:
+      - ./.mongo-data:/data/db
+    entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
