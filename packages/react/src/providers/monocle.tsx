@@ -5,12 +5,13 @@ import { MonocleContext } from "../hooks";
 export const MonocleProvider: FC<MonocleProviderProps> = ({
   app,
   identifier,
-  url,
+  host,
   children,
 }) => {
   const monocle = MonocleClient.initialize({
-    app: app,
-    url: url,
+    app,
+    host,
+    appId: identifier,
   });
 
   return (
@@ -23,6 +24,6 @@ export const MonocleProvider: FC<MonocleProviderProps> = ({
 interface MonocleProviderProps {
   app: string;
   identifier: string;
-  url: string;
+  host: string;
   children?: ReactNode;
 }

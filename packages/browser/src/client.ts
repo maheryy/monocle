@@ -24,8 +24,8 @@ export class MonocleClient extends BaseClient {
   private mousePositionsSubscription?: Subscription;
   private static monocleInstance: MonocleClient;
 
-  private constructor({ app, url }: MonocleClientOptions) {
-    super({ app, url });
+  private constructor(options: MonocleClientOptions) {
+    super(options);
   }
 
   private send(endpoint: string, payload: Record<string, unknown>): void {
@@ -34,18 +34,20 @@ export class MonocleClient extends BaseClient {
         JSON.stringify({
           ...payload,
           app: this.app,
-          userId: this.userId,
+          visitorId: this.visitorId,
+          appId: this.appId,
+          source: "browser",
         }),
       ],
       { type: "application/json" }
     );
 
-    const url = new URL(endpoint, this.url);
-
+    const url = new URL(endpoint, this.host);
     const isQueued = navigator.sendBeacon(url, body);
-
     if (!isQueued) {
-      fetch(url, { body, method: "POST", keepalive: true });
+      fetch(url, { body, method: "POST", keepalive: true })
+        // .then(() => console.info(`[Monocle] Request ${url} complete`))
+        .catch((err) => console.error(`[Monocle] Error: ${err.message}`));
     }
   }
 
@@ -127,6 +129,10 @@ export class MonocleClient extends BaseClient {
     };
   }
 
+  ua(): void {
+    this.dimension("UserAgent", navigator.userAgent);
+  }
+
   static get monocle() {
     return this.monocleInstance;
   }
@@ -179,5 +185,10 @@ export class MonocleClient extends BaseClient {
   static mouse() {
     this.isInitialized();
     return this.monocleInstance.mouse();
+  }
+
+  static ua() {
+    this.isInitialized();
+    return this.monocleInstance.ua();
   }
 }

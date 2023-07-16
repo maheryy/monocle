@@ -10,7 +10,7 @@ importers:
     devDependencies:
       '@nrwl/nx-cloud':
         specifier: latest
-        version: 16.0.5
+        version: 16.1.0
       '@tsconfig/recommended':
         specifier: ^1.0.2
         version: 1.0.2
@@ -23,6 +23,9 @@ importers:
 
   apps/blog:
     dependencies:
+      '@monocle/node':
+        specifier: workspace:^
+        version: link:../../packages/node
       '@monocle/react':
         specifier: workspace:^
         version: link:../../packages/react
@@ -115,6 +118,9 @@ importers:
       swagger-ui-express:
         specifier: ^4.6.3
         version: 4.6.3(express@4.18.2)
+      ua-parser-js:
+        specifier: ^1.0.35
+        version: 1.0.35
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -146,6 +152,9 @@ importers:
       '@types/swagger-ui-express':
         specifier: ^4.1.3
         version: 4.1.3
+      '@types/ua-parser-js':
+        specifier: ^0.7.36
+        version: 0.7.36
       copyfiles:
         specifier: ^2.4.1
         version: 2.4.1
@@ -180,7 +189,7 @@ importers:
     devDependencies:
       tsup:
         specifier: ^6.7.0
-        version: 6.7.0(ts-node@10.9.1)(typescript@5.0.4)
+        version: 6.7.0
 
   packages/core:
     devDependencies:
@@ -221,7 +230,7 @@ importers:
         version: 18.2.15
       tsup:
         specifier: ^6.7.0
-        version: 6.7.0
+        version: 6.7.0(ts-node@10.9.1)(typescript@5.0.4)
 
   packages/ui:
     dependencies:
@@ -1171,10 +1180,10 @@ packages:
       - debug
     dev: true
 
-  /@nrwl/nx-cloud@16.0.5:
-    resolution: {integrity: sha512-1p82ym8WE9ziejwgPslstn19iV/VkHfHfKr/5YOnfCHQS+NxUf92ogcYhHXtqWLblVZ9Zs4W4pkSXK4e04wCmQ==}
+  /@nrwl/nx-cloud@16.1.0:
+    resolution: {integrity: sha512-OFjbSqdCuZq9KRYU/mOlIN8SYLZREsLlZYqYpObZqXJ5meUgBDJbUSwRweUSUvt73fgRixLEau2jPysiLHKxSQ==}
     dependencies:
-      nx-cloud: 16.0.5
+      nx-cloud: 16.1.0
     transitivePeerDependencies:
       - debug
     dev: true
@@ -1765,6 +1774,10 @@ packages:
     dependencies:
       '@types/express': 4.17.17
       '@types/serve-static': 1.15.2
+    dev: true
+
+  /@types/ua-parser-js@0.7.36:
+    resolution: {integrity: sha512-N1rW+njavs70y2cApeIw1vLMYXRwfBy+7trgavGuuTfOd7j1Yh7QTRc/yqsPl6ncokt72ZXuxEU0PiCp9bSwNQ==}
     dev: true
 
   /@types/unist@2.0.7:
@@ -4508,11 +4521,11 @@ packages:
       set-blocking: 2.0.0
     dev: false
 
-  /nx-cloud@16.0.5:
-    resolution: {integrity: sha512-13P7r0aKikjBtmdZrNorwXzVPeVIV4MLEwqGY+DEG6doLBtI5KqEQk/d5B5l2dCF2BEi/LXEmLYCmf9gwbOJ+Q==}
+  /nx-cloud@16.1.0:
+    resolution: {integrity: sha512-2K5OuJ4MEDrn2solje2X+a3UxSCdfR5PIscCRQbBANyvJfl3hGJSTxz0n5xeJJX4cKcQlfAxDQFRH6DHNdTGPQ==}
     hasBin: true
     dependencies:
-      '@nrwl/nx-cloud': 16.0.5
+      '@nrwl/nx-cloud': 16.1.0
       axios: 1.1.3
       chalk: 4.1.2
       dotenv: 10.0.0
@@ -4800,22 +4813,6 @@ packages:
     dependencies:
       camelcase-css: 2.0.1
       postcss: 8.4.25
-    dev: true
-
-  /postcss-load-config@3.1.4:
-    resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
-    engines: {node: '>= 10'}
-    peerDependencies:
-      postcss: '>=8.0.9'
-      ts-node: '>=9.0.0'
-    peerDependenciesMeta:
-      postcss:
-        optional: true
-      ts-node:
-        optional: true
-    dependencies:
-      lilconfig: 2.1.0
-      yaml: 1.10.2
     dev: true
 
   /postcss-load-config@3.1.4(ts-node@10.9.1):
@@ -5817,41 +5814,6 @@ packages:
   /tslib@2.5.3:
     resolution: {integrity: sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==}
 
-  /tsup@6.7.0:
-    resolution: {integrity: sha512-L3o8hGkaHnu5TdJns+mCqFsDBo83bJ44rlK7e6VdanIvpea4ArPcU3swWGsLVbXak1PqQx/V+SSmFPujBK+zEQ==}
-    engines: {node: '>=14.18'}
-    hasBin: true
-    peerDependencies:
-      '@swc/core': ^1
-      postcss: ^8.4.12
-      typescript: '>=4.1.0'
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      postcss:
-        optional: true
-      typescript:
-        optional: true
-    dependencies:
-      bundle-require: 4.0.1(esbuild@0.17.18)
-      cac: 6.7.14
-      chokidar: 3.5.3
-      debug: 4.3.4
-      esbuild: 0.17.18
-      execa: 5.1.1
-      globby: 11.1.0
-      joycon: 3.1.1
-      postcss-load-config: 3.1.4
-      resolve-from: 5.0.0
-      rollup: 3.21.5
-      source-map: 0.8.0-beta.0
-      sucrase: 3.32.0
-      tree-kill: 1.2.2
-    transitivePeerDependencies:
-      - supports-color
-      - ts-node
-    dev: true
-
   /tsup@6.7.0(ts-node@10.9.1)(typescript@5.0.4):
     resolution: {integrity: sha512-L3o8hGkaHnu5TdJns+mCqFsDBo83bJ44rlK7e6VdanIvpea4ArPcU3swWGsLVbXak1PqQx/V+SSmFPujBK+zEQ==}
     engines: {node: '>=14.18'}
@@ -5942,6 +5904,10 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
     dev: true
+
+  /ua-parser-js@1.0.35:
+    resolution: {integrity: sha512-fKnGuqmTBnIE+/KXSzCn4db8RTigUzw1AN0DmdU6hJovUTbYJKyqj+8Mt1c4VfRDnOVJnENmfYkIPZ946UrSAA==}
+    dev: false
 
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
