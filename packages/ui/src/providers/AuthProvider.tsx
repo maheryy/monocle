@@ -45,6 +45,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
+        token,
         user,
         isAuthenticated,
         authenticate,
@@ -57,6 +58,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 };
 
 interface AuthContextProps {
+  token: string | null;
   user: TUser | null;
   isAuthenticated: boolean;
   authenticate: (user: TUser, token: string) => void;

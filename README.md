@@ -18,6 +18,23 @@ Monocle is split into multiple packages
 
 `@monocle/node` focuses on tracking interactions and collecting data that may occur in a node environment.
 
+`@monocle/react` built on top of @monocle/browser for react support.
+
+## Local demo
+
+To run the local demo, run the following commands:
+
+```sh
+docker compose -f docker-compose.demo.yml up -d
+
+docker compose -f docker-compose.demo.yml exec mongo mongosh --eval 'rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] })'
+
+docker compose -f docker-compose.demo.yml exec monocle-api pnpm prisma db seed
+```
+
+Go to [http://localhost:8080](http://localhost:8080) to view the blop example app.  
+Go to [http://localhost:8081](http://localhost:8081) to access the analytics back-office.
+
 ## Installation
 
 ### As a dependency
