@@ -4,6 +4,7 @@ import GridCard from "@/components/Grid/GridCard";
 import BarChart from "@/components/Chart/BarChart";
 import LineChart from "@/components/Chart/LineChart";
 import DoughnutChart from "@/components/Chart/DoughnutChart";
+import PieChart from "@/components/Chart/PieChart";
 
 import {
   Chart as ChartJS,
@@ -12,7 +13,7 @@ import {
   ArcElement,
   CategoryScale, // x axis
   LinearScale, // y axis
-  PointElement
+  PointElement,
 } from "chart.js";
 
 ChartJS.register(
@@ -21,9 +22,8 @@ ChartJS.register(
   ArcElement,
   CategoryScale,
   PointElement,
-  LinearScale,
+  LinearScale
 );
-
 
 const Grid = () => {
   const ReactGridLayout = WidthProvider(Responsive);
@@ -31,7 +31,8 @@ const Grid = () => {
   const layout: Layout[] = [
     { i: "a", x: 0, y: 0, w: 1, h: 2 },
     { i: "b", x: 1, y: 0, w: 1, h: 2 },
-    { i: "c", x: 4, y: 0, w: 1, h: 2 }
+    { i: "c", x: 4, y: 0, w: 1, h: 2 },
+    { i: "d", x: 0, y: 5, w: 1, h: 2 },
   ];
 
   return (
@@ -56,7 +57,12 @@ const Grid = () => {
           <DoughnutChart />
         </GridCard>
       </div>
-    </ReactGridLayout >
+      <div key="d">
+        <GridCard title="Pie Chart">
+          <PieChart />
+        </GridCard>
+      </div>
+    </ReactGridLayout>
   );
 };
 
