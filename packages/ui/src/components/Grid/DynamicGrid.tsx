@@ -105,28 +105,33 @@ const DynamicGrid = () => {
   };
 
   return (
-    <div className="flex">
-      <button className="btn" onClick={handleSave}>
+    <>
+      <button
+        className="max-w-max justify-self-end text-gray-100 bg-purple-600 m-2 px-4 py-2 rounded-md hover:bg-purple-700"
+        onClick={handleSave}
+      >
         Save
       </button>
-      <ToolBox
-        items={toolbox[currentBreakpoint] || []}
-        onTakeItem={onTakeItem}
-      />
-      <ResponsiveReactGridLayout
-        className={"flex-1 layout"}
-        rowHeight={100}
-        layouts={layouts}
-        onBreakpointChange={onBreakpointChange}
-        onLayoutChange={(layout, layouts) =>
-          onLayoutChangeHandler(layout, layouts)
-        }
-        measureBeforeMount={false}
-        cols={{ lg: 4, md: 3, sm: 2, xs: 2, xxs: 1 }}
-      >
-        {generateDOM()}
-      </ResponsiveReactGridLayout>
-    </div>
+      <div className="flex">
+        <ToolBox
+          items={toolbox[currentBreakpoint] || []}
+          onTakeItem={onTakeItem}
+        />
+        <ResponsiveReactGridLayout
+          className={"flex-1 layout"}
+          rowHeight={100}
+          layouts={layouts}
+          onBreakpointChange={onBreakpointChange}
+          onLayoutChange={(layout, layouts) =>
+            onLayoutChangeHandler(layout, layouts)
+          }
+          measureBeforeMount={false}
+          cols={{ lg: 4, md: 3, sm: 2, xs: 2, xxs: 1 }}
+        >
+          {generateDOM()}
+        </ResponsiveReactGridLayout>
+      </div>
+    </>
   );
 };
 
