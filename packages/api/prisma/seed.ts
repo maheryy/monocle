@@ -84,8 +84,6 @@ const userAgentDimensions = Array.from({ length: 25 }).map(() => ({
 
 const urls = Array.from({ length: 10 }).map(() => faker.internet.url());
 
-const urls = Array.from({ length: 10 }).map(() => faker.internet.url());
-
 const pageViewDimensions = Array.from({ length: 25 }).map(() => ({
   name: "PageView",
   app: "react",
@@ -95,6 +93,7 @@ const pageViewDimensions = Array.from({ length: 25 }).map(() => ({
 }));
 
 const defaultPassword = bcypt.hashSync("password", 10);
+
 const users = [
   {
     email: "blog@demo.com",
