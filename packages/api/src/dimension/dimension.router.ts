@@ -17,6 +17,6 @@ dimensionRouter.post(
   createDimension
 );
 
-dimensionRouter.get("/user-agents/stats", verifyApp, getUserAgentsStats);
+dimensionRouter.get("/user-agents/stats", getUserAgentsStats);
 
 export default dimensionRouter;

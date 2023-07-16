@@ -12,8 +12,8 @@ const eventRouter: Router = Router();
 
 eventRouter.post("/", validate(CreateEvent), verifyApp, createEvent);
 
-eventRouter.get("/stats", verifyApp, getEventsStats);
+eventRouter.get("/stats", getEventsStats);
 
-eventRouter.get("/mouse", validate(GetMouseEvents), verifyApp, getMouseEvents);
+eventRouter.get("/mouse", validate(GetMouseEvents), getMouseEvents);
 
 export default eventRouter;
