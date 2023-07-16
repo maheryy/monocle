@@ -1,11 +1,11 @@
 import prisma from "../database";
-import { TCreateEventData, TGetMouseEvents } from "./event.zod";
+import { TCreateEvent, TGetMouseEvents } from "./event.zod";
 
-export function createEvent(data: TCreateEventData) {
+export function createEvent(data: TCreateEvent) {
   return prisma.event.create({ data });
 }
 
-export function countEvents(name?: string) {
+export function countEvents(appId: string, name?: string) {
   return prisma.event.count({
     where: {
       name,
@@ -13,12 +13,13 @@ export function countEvents(name?: string) {
   });
 }
 
-export async function getEventsStats() {
-  const eventsCount = await countEvents();
+export async function getEventsStats(appId: string) {
+  const eventsCount = await countEvents(appId);
 
   const events = await prisma.event.groupBy({
     by: ["name"],
     where: {
+      appId,
       name: {
         not: "mouse",
       },
@@ -46,13 +47,10 @@ export async function getEventsStats() {
   );
 }
 
-export async function getMouseEvents({
-  page,
-  pageX,
-  pageY,
-  start,
-  end,
-}: TGetMouseEvents) {
+export async function getMouseEvents(
+  appId: string,
+  { page, pageX, pageY, start, end }: TGetMouseEvents
+) {
   const [result] = (await prisma.event.aggregateRaw({
     pipeline: [
       {
@@ -62,6 +60,7 @@ export async function getMouseEvents({
         $match: {
           name: "mouse",
           "payload.page": page,
+          appId,
           $expr: end
             ? {
                 $and: [

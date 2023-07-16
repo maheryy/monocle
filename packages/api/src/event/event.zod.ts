@@ -1,8 +1,14 @@
 import { z } from "zod";
 import { BaseBody } from "../common/common.zod";
+import { JsonObject } from "type-fest";
 
-export const CreateEvent = BaseBody.extend({
+const Event = BaseBody.extend({
   payload: z.record(z.unknown()),
+});
+
+export const CreateEvent = Event.omit({
+  source: true,
+  secret: true,
 });
 
 export const GetMouseEvents = z
@@ -38,6 +44,10 @@ export const GetMouseEvents = z
     }
   );
 
-export type TCreateEventBody = z.infer<typeof CreateEvent>;
-export type TCreateEventData = Omit<TCreateEventBody, "source" | "secret">;
+export type TEvent = z.infer<typeof Event>;
+
+export type TCreateEvent = z.infer<typeof CreateEvent> & {
+  payload: JsonObject;
+};
+
 export type TGetMouseEvents = z.infer<typeof GetMouseEvents>;

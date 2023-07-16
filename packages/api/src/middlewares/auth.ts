@@ -5,6 +5,7 @@ import {
   getUserWithoutPassword,
   verifyToken,
 } from "../auth/auth.service";
+import { getAppId } from "../credential/credential.service";
 
 export const authenticate = async (
   req: Request,
@@ -23,13 +24,19 @@ export const authenticate = async (
     }
 
     const payload = await verifyToken(token);
-    const user = await getUserById(payload.userId);
+
+    const [user, appId] = await Promise.all([
+      getUserById(payload.userId),
+      getAppId(payload.userId),
+    ]);
 
     if (!user) {
       throw new UnauthorizedError("User can't be found");
     }
 
     req.user = getUserWithoutPassword(user);
+
+    req.appId = appId;
     next();
   } catch (error) {
     next(error);

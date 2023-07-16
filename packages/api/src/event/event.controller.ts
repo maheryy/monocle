@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as eventService from "./event.service";
-import { TCreateEventData } from "./event.zod";
+import { TCreateEvent } from "./event.zod";
 import { TGetMouseEvents } from "./event.zod";
 
 export async function createEvent(
@@ -9,7 +9,7 @@ export async function createEvent(
   next: NextFunction
 ) {
   try {
-    const data = req.body as TCreateEventData;
+    const data = req.body as TCreateEvent;
     const event = await eventService.createEvent(data);
 
     return res.status(204).end();
@@ -18,14 +18,17 @@ export async function createEvent(
   }
 }
 
-export async function getEventsStats(req: Request, res: Response) {
-  const events = await eventService.getEventsStats();
+export async function getEventsStats({ appId }: Request, res: Response) {
+  const events = await eventService.getEventsStats(appId);
 
   return res.status(200).json(events);
 }
 
-export async function getMouseEvents({ query }: Request, res: Response) {
-  const events = await eventService.getMouseEvents(query as TGetMouseEvents);
+export async function getMouseEvents({ query, appId }: Request, res: Response) {
+  const events = await eventService.getMouseEvents(
+    appId,
+    query as TGetMouseEvents
+  );
 
   return res.status(200).json(events);
 }

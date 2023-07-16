@@ -1,13 +1,14 @@
 import prisma from "../database";
-import { TCreateMetricData } from "./metric.zod";
+import { TCreateMetric } from "./metric.zod";
 
-export function createMetric(data: TCreateMetricData) {
+export function createMetric(data: TCreateMetric) {
   return prisma.metric.create({ data });
 }
 
-export async function getMetricStats(name: string) {
+export async function getMetricStats(appId: string, name: string) {
   const { _avg, _max, _min } = await prisma.metric.aggregate({
     where: {
+      appId,
       name,
     },
     _avg: {

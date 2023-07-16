@@ -56,6 +56,8 @@ Make sure to set the following environment variables:
 
 `MONOCLE_CORS_ORIGIN` is the origin to allow cors from. (default: `*`)
 
+`JWT_SECRET` is the secret to use for signing jwt tokens. (no default)
+
 #### Example using docker
 
 ```sh
