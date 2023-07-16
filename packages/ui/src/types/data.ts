@@ -1,14 +1,17 @@
 export interface Data {
   name: string;
-  component: EDataComponent;
+  component: DataComponent;
   type: string;
   key: string;
   layout: number[];
+  endpoint: string;
 }
 
 export enum EDataComponent {
-  METRICS = "metrics",
-  EVENTS = "events",
-  DIMENSIONS = "dimensions",
+  METRIC = "metric",
+  DEVICE = "device",
+  TABLE = "table",
   CHARTS = "charts",
 }
+
+type DataComponent = `${EDataComponent}`;

@@ -5,9 +5,10 @@ import { getData } from "@/api/data.api";
 import { useEffect, useState } from "react";
 import { Data, EDataComponent } from "@/types/data";
 import Metric from "@/components/Metric";
-import Dimension from "@/components/Dimension";
 import { retrieve } from "@/utils/storage";
 import { StorageKey } from "@/types/storage";
+import Table from "@/components/Table";
+import Devices from "@/components/Chart/Devices";
 
 const ReactGridLayout = WidthProvider(Responsive);
 
@@ -39,25 +40,35 @@ const Grid = () => {
     <ReactGridLayout
       className="layout flex-1"
       layout={layout}
-      cols={3}
+      cols={4}
       width={1200}
     >
       {data.map((item) => {
-        let props = undefined;
-        if (item.component === EDataComponent.METRICS) {
-          props = { x: 1 };
-          return (
-            <div key={item.key} className="bg-blue-100">
-              <GridCard title={item.name}>
-                <Metric {...props} />
-              </GridCard>
-            </div>
-          );
-        } else {
+        if (item.component === EDataComponent.METRIC) {
           return (
             <div key={item.key}>
               <GridCard title={item.name}>
-                <Dimension />
+                <Metric k={item.key} />
+              </GridCard>
+            </div>
+          );
+        }
+
+        if (item.component === EDataComponent.TABLE) {
+          return (
+            <div key={item.key}>
+              <GridCard title={item.name}>
+                <Table k={item.key} endpoint={item.endpoint} />
+              </GridCard>
+            </div>
+          );
+        }
+
+        if (item.component === EDataComponent.DEVICE) {
+          return (
+            <div key={item.key}>
+              <GridCard title={item.name}>
+                <Devices />
               </GridCard>
             </div>
           );
