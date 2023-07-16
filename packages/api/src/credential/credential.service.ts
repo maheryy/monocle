@@ -3,8 +3,8 @@ import crypto from "crypto";
 const APP_PREFIX = "mcl";
 
 /**
- * Generate a random app id
- * Example: MCL-5D2F3A
+ * Generate a random app id.
+ * Example: MCL-5D2F3AEQ
  */
 export const generatePublicKey = (
   length: number = 8,
@@ -17,7 +17,7 @@ export const generatePublicKey = (
 };
 
 /**
- * Generate a random app secret
+ * Generate a random app secret.
  * Example: mcl_dGhpcyBpcyBhIHRlc3Qgc2VjcmV0
  */
 export const generateSecretKey = (

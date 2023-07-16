@@ -4,12 +4,7 @@ import { AnyZodObject } from "zod";
 export function validate(schema: AnyZodObject) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.strict().parse({
-        ...req.body,
-        ...req.params,
-        ...req.query,
-      });
-
+      req.body = schema.strict().parse(req.body);
       return next();
     } catch (error) {
       return res.status(400).json({ error });

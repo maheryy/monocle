@@ -7,6 +7,7 @@ import {
   verifyPassword,
 } from "./auth.service";
 import { BadRequestError } from "../exceptions/BadRequestError";
+import { TRegisterData } from "./auth.interface";
 
 export const login = async (
   req: Request,
@@ -39,16 +40,15 @@ export const register = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password, firstName, lastName } = req.body;
-    if (await getUserByEmail(email)) {
+    const data = req.body as TRegisterData;
+
+    if (await getUserByEmail(data.email)) {
       throw new BadRequestError("Email already exists");
     }
 
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await hashPassword(data.password);
     const user = await createUser({
-      email,
-      firstName,
-      lastName,
+      ...data,
       password: hashedPassword,
     });
 

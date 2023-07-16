@@ -4,6 +4,10 @@ import { JwtPayload, TRegisterData } from "./auth.interface";
 import { UnauthorizedError } from "../exceptions/UnauthorizedError";
 import prisma from "../database";
 import { User } from "@prisma/client";
+import {
+  generatePublicKey,
+  generateSecretKey,
+} from "../credential/credential.service";
 
 export const getUserById = async (id: string) => {
   return prisma.user.findUnique({ where: { id } });
@@ -13,8 +17,39 @@ export const getUserByEmail = async (email: string) => {
   return prisma.user.findUnique({ where: { email } });
 };
 
-export const createUser = async (user: TRegisterData) => {
-  return prisma.user.create({ data: user });
+export const createUser = async (data: TRegisterData) => {
+  let publicKey: string, secretKey: string;
+
+  do {
+    publicKey = generatePublicKey();
+    secretKey = generateSecretKey();
+  } while (
+    await prisma.credential.findFirst({
+      where: { OR: [{ publicKey }, { secretKey }] },
+    })
+  );
+
+  const userData = {
+    email: data.email,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    password: data.password,
+  };
+  const profileData = {
+    company: data.company,
+    website: data.website,
+    address: data.address,
+    kbis: data.kbis,
+    phone: data.phone,
+  };
+
+  return prisma.user.create({
+    data: {
+      ...userData,
+      profile: { create: { ...profileData } },
+      credential: { create: { publicKey, secretKey } },
+    },
+  });
 };
 
 export const generateToken = async (payload: JwtPayload) => {
