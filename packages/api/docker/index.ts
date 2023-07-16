@@ -1,9 +1,13 @@
 import { createMonocleServer } from "../src";
 
-const { MONOCLE_DATABASE_URL, MONOCLE_CORS_ORIGIN } = process.env;
+const { MONOCLE_DATABASE_URL, MONOCLE_CORS_ORIGIN, JWT_SECRET } = process.env;
 
 if (!MONOCLE_DATABASE_URL) {
   throw new Error("Missing MONOCLE_DATABASE_URL");
+}
+
+if (!JWT_SECRET) {
+  throw new Error("Missing JWT_SECRET");
 }
 
 if (!MONOCLE_CORS_ORIGIN) {
