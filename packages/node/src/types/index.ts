@@ -1,5 +1,5 @@
 import { ClientOptions } from "@monocle/core";
 
-export interface NodeClientOptions extends ClientOptions {
+export interface MonocleClientOptions extends ClientOptions {
   secret: string;
 }
