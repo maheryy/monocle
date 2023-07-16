@@ -45,9 +45,12 @@ export async function getUserAgentsStats() {
   return Object.entries(devices).reduce(
     (acc, [key, value]) => ({
       ...acc,
-      [key]: value / devices.total,
+      [key]: {
+        count: value,
+        percentage: value / devices.total,
+      },
     }),
-    {} as { [key: string]: number }
+    {} as { [key: string]: { count: number; percentage: number } }
   );
 }
 
