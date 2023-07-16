@@ -4,7 +4,7 @@ import GridCard from "@/components/Grid/GridCard";
 import BarChart from "@/components/Chart/BarChart";
 import LineChart from "@/components/Chart/LineChart";
 import DoughnutChart from "@/components/Chart/DoughnutChart";
-import PieChart from "@/components/Chart/PieChart";
+import Devices from "@/components/Chart/Devices";
 
 import {
   Chart as ChartJS,
@@ -59,7 +59,7 @@ const Grid = () => {
       </div>
       <div key="d">
         <GridCard title="Pie Chart">
-          <PieChart />
+          <Devices />
         </GridCard>
       </div>
     </ReactGridLayout>
