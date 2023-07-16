@@ -19,7 +19,7 @@ export async function getUserAgentsStats() {
 
   const devices = userAgents.reduce(
     (acc, { value }) => {
-      const { device } = new UAParser(value).getResult();
+      const { device } = UAParser(value);
 
       if (device.type) {
         return {

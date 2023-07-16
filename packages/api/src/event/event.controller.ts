@@ -16,3 +16,9 @@ export async function createEvent(
     next(error);
   }
 }
+
+export async function getEventsStats(req: Request, res: Response) {
+  const events = await eventService.getEventsStats();
+
+  return res.status(200).json(events);
+}
