@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import prisma from "../database";
 
 const APP_PREFIX = "mcl";
 
@@ -27,3 +28,17 @@ export const generateSecretKey = (
   const secret = crypto.randomBytes(length).toString("base64").slice(0, length);
   return `${prefix}_${secret}`.toLowerCase();
 };
+
+export async function getAppId(userId: string) {
+  const credentials = await prisma.credential.findUnique({
+    where: {
+      userId,
+    },
+  });
+
+  if (!credentials) {
+    throw new Error("Credentials not found");
+  }
+
+  return credentials.publicKey;
+}

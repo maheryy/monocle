@@ -1,21 +1,22 @@
 import prisma from "../database";
-import { TCreateDimensionData } from "./dimension.zod";
+import { TCreateDimension } from "./dimension.zod";
 import { UAParser } from "ua-parser-js";
 
-export function createDimension(data: TCreateDimensionData) {
+export function createDimension(data: TCreateDimension) {
   return prisma.dimension.create({ data });
 }
 
-export function getDimensions(name?: string) {
+export function getDimensions(appId: string, name?: string) {
   return prisma.dimension.findMany({
     where: {
+      appId,
       name,
     },
   });
 }
 
-export async function getUserAgentsStats() {
-  const userAgents = await getDimensions("UserAgent");
+export async function getUserAgentsStats(appId: string) {
+  const userAgents = await getDimensions(appId, "UserAgent");
 
   const devices = userAgents.reduce(
     (acc, { value }) => {
@@ -54,20 +55,22 @@ export async function getUserAgentsStats() {
   );
 }
 
-export async function countDimensions(name?: string) {
+export async function countDimensions(appId: string, name?: string) {
   return prisma.dimension.count({
     where: {
+      appId,
       name,
     },
   });
 }
 
-export async function getPageViewsStats() {
-  const pageViewsCount = await countDimensions("PageView");
+export async function getPageViewsStats(appId: string) {
+  const pageViewsCount = await countDimensions(appId, "PageView");
 
   const pageViews = await prisma.dimension.groupBy({
     by: ["value"],
     where: {
+      appId,
       name: "PageView",
     },
     _count: {
