@@ -126,7 +126,7 @@ const DynamicGrid = () => {
             onLayoutChangeHandler(layout, layouts)
           }
           measureBeforeMount={false}
-          cols={{ lg: 4, md: 3, sm: 2, xs: 2, xxs: 1 }}
+          cols={{ lg: 4, md: 3, sm: 3, xs: 2, xxs: 1 }}
         >
           {generateDOM()}
         </ResponsiveReactGridLayout>

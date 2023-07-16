@@ -39,7 +39,7 @@ const Grid = () => {
     <ReactGridLayout
       className="layout flex-1"
       layout={layout}
-      cols={2}
+      cols={3}
       width={1200}
     >
       {data.map((item) => {
