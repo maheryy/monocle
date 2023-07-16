@@ -17,7 +17,7 @@ const MONOCLE_HOST = "http://localhost:3000";
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <MonocleProvider app={APP_NAME} identifier={MONOCLE_ID} host={MONOCLE_HOST}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
       <TestComponent />
     </MonocleProvider>
   );
