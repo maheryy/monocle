@@ -19,6 +19,7 @@ const origin = MONOCLE_CORS_ORIGIN || "*";
 const server = createMonocleServer({
   corsOptions: {
     origin,
+    credentials: true,
   },
 });
 
